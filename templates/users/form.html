@@ -1,0 +1,52 @@
+{% extends '/layout.html' %}
+{% import 'helpers.html' as helpers %}
+{% set title_label = 'Crear usuario' if not id else 'Editar usuario' %}
+{% block title %}{{ title_label }}{% endblock %}
+{% block body %}
+<h5>{{ title_label }}</h5>
+
+<form method="POST">
+    <div class="grid-x grid-padding-x">
+        <div class="large-2 cell">
+            <label for="middle-label" class="text-right middle">Nombre</label>
+        </div>
+        <div class="large-3 cell">
+            {{ helpers.input(form.name) }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-2 cell">
+            <label for="middle-label" class="text-right middle">Login</label>
+        </div>
+        <div class="large-3 cell">
+            {{ helpers.input(form.login) }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-2 cell">
+            <label for="middle-label" class="text-right middle">Contraseña</label>
+        </div>
+        <div class="large-3 cell">
+            {{ helpers.input(form.password) }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-2 cell">
+            <label for="middle-label" class="text-right middle">Confirma la contraseña</label>
+        </div>
+        <div class="large-3 cell">
+            {{ helpers.input(form.confirm_password) }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-3 large-offset-2 cell">
+                <a href="{{ url_for('.index') }}" class="secondary button">Cancelar</a>
+                <button type="submit" class="button">Guardar</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,52 @@
+{%extends '/layout.html'%}
+{%block title%}Crear movimiento{%endblock%}
+{%block body%}    
+    <h3>Crear movimiento</h1>    
+    
+    <form method="POST">
+        <ul class="tabs" data-tabs id="form-tabs">
+            <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Localización</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Actividad</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Litologia</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel4" href="#panel4">Clasificación</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel5" href="#panel5">Morfometria</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel6" href="#panel6">Causas</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel7" href="#panel7">Cobertura</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel8" href="#panel8">Referencias</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel9" href="#panel9">Efectos S.</a></li>
+            <li class="tabs-title"><a data-tabs-target="panel10" href="#panel10">Daños</a></li>
+        </ul>
+        <div class="tabs-content" data-tabs-content="form-tabs">
+            <div class="tabs-panel is-active" id="panel1">
+                {% include 'inventarios/localizacion.html' %}
+            </div>
+            <div class="tabs-panel" id="panel2">
+                {% include 'inventarios/actividad.html' %}
+            </div>
+            <div class="tabs-panel" id="panel3">
+                {% include 'inventarios/litologia.html' %}
+            </div>
+            <div class="tabs-panel" id="panel4">
+                {% include 'inventarios/clasificacion.html' %}
+            </div>
+            <div class="tabs-panel" id="panel5">
+                {% include 'inventarios/morfometria.html' %}
+            </div>
+            <div class="tabs-panel" id="panel6">
+                {% include 'inventarios/causas.html' %}
+            </div>
+            <div class="tabs-panel" id="panel7">
+                {% include 'inventarios/cobertura.html' %}
+            </div>
+            <div class="tabs-panel" id="panel8">
+                {% include 'inventarios/referencias.html' %}
+            </div>
+            <div class="tabs-panel" id="panel9">
+                {% include 'inventarios/efectos.html' %}
+            </div>
+            <div class="tabs-panel" id="panel10">
+                {% include 'inventarios/danos.html' %}
+            </div>
+        </div>
+    </form>                
+{%endblock%}

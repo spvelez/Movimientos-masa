@@ -1,0 +1,21 @@
+{%extends '/layout.html'%}
+{%block title%}Movimientos de masas{%endblock%}
+{%block body%}    
+    <h3>Movimientos de masas</h1>
+    <a href="{{ url_for('.create') }}" class="button">Nuevo movimiento</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Login</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+                
+{%endblock%}

@@ -1,0 +1,26 @@
+{%extends '/layout.html'%}
+{% import 'helpers.html' as helpers %}
+{%block title%}Iniciar sesión{%endblock%}
+{%block body%}    
+    <div class="grid-x">
+        <div class="cell small-12 large-4 large-offset-4">
+            <h3 class="text-center">Iniciar sesión</h1>
+            {{ helpers.error_summary() }}
+
+            <form method="POST">
+                <div>
+                    <label>Login</label>
+                    <input type="text" name="login">                        
+                </div>
+                <div>
+                    <label>Contraseña</label>
+                    <input type="password" name="password">                        
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="button">Ingresar</button>
+                </div>                    
+            </form>
+        </div>
+    </div>    
+{%endblock%}
