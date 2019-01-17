@@ -1,0 +1,31 @@
+#main-navigation, #main-navigation ul, .title-bar {
+    background-color: #373a3c !important;
+}
+
+#main-navigation .menu a {
+    color: rgba(255, 255, 255, 0.8)
+}
+
+#main-navigation .menu a:hover {
+    color: #fff;
+}
+
+#main-navigation .menu-text {
+    color: #fff;
+    /*font-weight: normal;*/
+}
+
+#main-navigation .brand {
+    font-size: 1.1rem;
+}
+
+#main-content {
+    padding-top: .9rem;
+    padding-left: .9rem;
+    padding-right: .9rem;
+}
+
+ul.error-msg {
+    list-style-type: none;
+    margin-left: 0;
+}
