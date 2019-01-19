@@ -21,9 +21,9 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    from . import account, inventarios, users
+    from . import account, movimientos, users
     app.register_blueprint(account.bp)
-    app.register_blueprint(inventarios.bp)
+    app.register_blueprint(movimientos.bp)
     app.register_blueprint(users.bp)
 
     return app
