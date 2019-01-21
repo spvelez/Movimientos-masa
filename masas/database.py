@@ -19,6 +19,7 @@ DbModel.query = session.query_property()
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
+    from .models import movimiento
     from .models import user
 
     DbModel.metadata.create_all(bind=engine)
