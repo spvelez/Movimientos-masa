@@ -3,11 +3,12 @@ from wtforms import (
     StringField, PasswordField, TextAreaField
 )
 from wtforms.validators import DataRequired, EqualTo
+from .validators import UserExists
 
 
 class UserForm(Form):
     name = StringField('Nombre', [DataRequired()])
-    login = StringField('Login', [DataRequired()])
+    login = StringField('Login', [DataRequired(), UserExists()])
     password = PasswordField('Contraseña', [
         DataRequired(),
         EqualTo('confirm_password', 'Las contraseñas deben coincidir')])

@@ -2,7 +2,6 @@ from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from wtforms.validators import StopValidation
 from .models.user import User
 from .database import session
 from .forms import UserForm
@@ -41,13 +40,12 @@ def edit(id):
 
     formData = request.form if request.method == 'POST' else None
     form = UserForm(formData, obj=user)
-
-    form.login.validators.append(UserExists(user.id))
+    form.user_id = id
 
     if request.method == 'POST' and form.validate():
         form.populate_obj(user)
 
-        usr.password = generate_password_hash(usr.password)
+        user.password = generate_password_hash(user.password)
         session.commit()
 
         return redirect(url_for('.index'))
@@ -62,19 +60,3 @@ def delete(id):
     session.commit()
 
     return redirect(url_for('.index'))
-
-
-class UserExists:
-    def __init__(self, user_id=0, message=None):
-        self.user_id = user_id
-
-        if not message:
-            message = 'El usuario ya existe'
-        self.message = message
-
-    def __call__(self, form, field):
-        count = User.query.filter(User.id != self.user_id,
-                                  User.login == field.data).count()
-
-        if count > 0:
-            raise StopValidation(self.message)
