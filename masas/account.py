@@ -1,8 +1,11 @@
 from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
+from . import authorize
+from .forms import ChangePasswordForm
 from .models.user import User
+from .database import session as db_session
 
 bp = Blueprint('account', __name__, template_folder='templates')
 
@@ -31,3 +34,22 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@bp.route('/changepassword', methods=['GET', 'POST'])
+@authorize()
+def change_password():
+    form = ChangePasswordForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User.query.filter(User.id == session['user_id']).first()
+
+        if not check_password_hash(user.password, form.password.data):
+            flash('La contraseña actual es incorrecta')
+        else:
+            new_password = form.new_password.data
+            user.password = generate_password_hash(new_password)
+            db_session.commit()
+
+            return redirect(url_for('index'))
+
+    return render_template('changepassword.html', form=form)

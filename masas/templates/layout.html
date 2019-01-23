@@ -29,8 +29,17 @@
     <div class="top-bar-right">
       <ul class="menu vertical medium-horizontal">
         {% if session['user_id'] %}
-          <li class="menu-text">{{ session['user_login'] }} {{ g.user }}</li>
-          <li><a href="{{ url_for('account.logout') }}">Salir</a></li>
+          <li>
+            <ul class="dropdown menu" data-dropdown-menu>
+              <li>
+                <a href="#">{{ session['user_login'] }}</a>
+                <ul class="menu">
+                  <li><a href="{{ url_for('account.change_password') }}">Cambiar contraseña</a></li>
+                  <li><a href="{{ url_for('account.logout') }}">Salir</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
         {% else %}
           <li><a href="{{ url_for('account.login') }}">Ingresar</a></li>
         {% endif %}
