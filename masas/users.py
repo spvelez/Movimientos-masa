@@ -2,6 +2,8 @@ from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from . import authorize
+from .enums import UserRole
 from .models.user import User
 from .database import session
 from .forms import UserForm
@@ -10,15 +12,16 @@ bp = Blueprint('users', __name__, template_folder='templates')
 
 
 @bp.route('/users')
+@authorize(UserRole.admin)
 def index():
     users = User.query.all()
     return render_template('users/index.html', users=users)
 
 
 @bp.route('/users/create', methods=['GET', 'POST'])
+@authorize(UserRole.admin)
 def create():
     form = UserForm(request.form)
-    form.login.validators.append(UserExists())
 
     if request.method == 'POST' and form.validate():
         usr = User()
@@ -35,6 +38,7 @@ def create():
 
 
 @bp.route('/users/edit/<int:id>', methods=['GET', 'POST'])
+@authorize(UserRole.admin)
 def edit(id):
     user = User.query.filter(User.id == id).first()
 
@@ -54,6 +58,7 @@ def edit(id):
 
 
 @bp.route('/users/delete/<int:id>', methods=['POST'])
+@authorize(UserRole.admin)
 def delete(id):
     usr = User.query.filter(User.id == id).first()
     session.delete(usr)
