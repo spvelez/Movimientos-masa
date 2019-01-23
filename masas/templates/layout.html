@@ -22,14 +22,14 @@
         <li class="menu-text hide-for-small-only brand">Movimientos</li>
         {% if session['user_id'] %}
           <li><a href="{{ url_for('users.index') }}">Usuarios</a></li>
-          <li><a href="{{ url_for('inventarios.index') }}">Formularios</a></li>
+          <li><a href="{{ url_for('movimientos.index') }}">Formularios</a></li>
         {% endif %}
       </ul>
     </div>
     <div class="top-bar-right">
       <ul class="menu vertical medium-horizontal">
         {% if session['user_id'] %}
-          <li class="menu-text">admin</li>
+          <li class="menu-text">{{ session['user_login'] }} {{ g.user }}</li>
           <li><a href="{{ url_for('account.logout') }}">Salir</a></li>
         {% else %}
           <li><a href="{{ url_for('account.login') }}">Ingresar</a></li>
