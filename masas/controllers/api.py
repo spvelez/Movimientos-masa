@@ -2,9 +2,9 @@ from flask import (
      Blueprint, make_response, request, jsonify
 )
 from werkzeug.exceptions import NotFound
-from .enums import UserRole
-from .models.user import User
-from .database import session
+from masas.enums import UserRole
+from masas.models.user import User
+from masas.database import session
 
 bp = Blueprint('api', __name__)
 

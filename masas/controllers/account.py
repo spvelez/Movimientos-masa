@@ -2,10 +2,10 @@ from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from . import authorize
-from .forms import ChangePasswordForm
-from .models.user import User
-from .database import session as db_session
+from masas import authorize
+from masas.forms import ChangePasswordForm
+from masas.models.user import User
+from masas.database import session as db_session
 
 bp = Blueprint('account', __name__, template_folder='templates')
 

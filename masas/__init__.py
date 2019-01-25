@@ -22,7 +22,7 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    from . import account, api, movimientos, users
+    from .controllers import account, api, movimientos, users
     app.register_blueprint(account.bp)
     app.register_blueprint(api.bp)
     app.register_blueprint(movimientos.bp)

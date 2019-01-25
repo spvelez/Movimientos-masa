@@ -2,11 +2,11 @@ from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from . import authorize
-from .enums import UserRole
-from .models.user import User
-from .database import session
-from .forms import UserForm
+from masas import authorize
+from masas.enums import UserRole
+from masas.models.user import User
+from masas.database import session
+from masas.forms import UserForm
 
 bp = Blueprint('users', __name__, template_folder='templates')
 
