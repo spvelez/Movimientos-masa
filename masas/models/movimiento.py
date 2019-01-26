@@ -17,7 +17,7 @@ class Movimiento(DbModel):
 
     localizacion = relationship('Localizacion', uselist=False)
     actividad = relationship('Actividad', uselist=False)
-    estratigrafia = relationship('Estratigrafia', uselist=False)
+    litologia = relationship('Litologia', uselist=False)
     clasificacion = relationship('Clasificacion', uselist=False)
     morfometria = relationship('Morfometria', uselist=False)
     causa = relationship('Causa', uselist=False)
@@ -92,7 +92,7 @@ class Actividad(DbModel):
 
     movimiento_id = Column(Integer, ForeignKey('movimiento.id'))
 
-    distribuciones = relationship('Distribucion', backref='actividad')
+    distribucion = relationship('Distribucion', uselist=False)
 
 
 class Distribucion(DbModel):
@@ -111,8 +111,8 @@ class Distribucion(DbModel):
     actividad_id = Column(Integer, ForeignKey('actividad.id'))
 
 
-class Estratigrafia(DbModel):
-    __tablename__ = 'estratigrafia'
+class Litologia(DbModel):
+    __tablename__ = 'litologia'
 
     id = Column(Integer, primary_key=True)
 
@@ -120,11 +120,11 @@ class Estratigrafia(DbModel):
 
     movimiento_id = Column(Integer, ForeignKey('movimiento.id'))
 
-    detalles = relationship('DetalleEstratigrafia', backref='estratigrafia')
+    detalles = relationship('DetalleLitologia', backref='litologia')
 
 
-class DetalleEstratigrafia(DbModel):
-    __tablename__ = 'detalle_estratigrafia'
+class DetalleLitologia(DbModel):
+    __tablename__ = 'detalle_litologia'
 
     id = Column(Integer, primary_key=True)
 
@@ -133,7 +133,7 @@ class DetalleEstratigrafia(DbModel):
     buzamiento = Column(String(64))
     espaciamiento = Column(String(8))
 
-    estratigrafia_id = Column(Integer, ForeignKey('estratigrafia.id'))
+    litologia_id = Column(Integer, ForeignKey('litologia.id'))
 
 
 class Clasificacion(DbModel):
