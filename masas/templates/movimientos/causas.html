@@ -1,0 +1,69 @@
+{% macro _radio_causa(field, desc) %}
+    <div div class="grid-x">
+        {% for item in field %}
+            <div class="large-1 small-1">{{ item }}</div>
+        {% endfor %}
+        <div class="large-10">{{ desc }}</div>
+    </div>
+{% endmacro %}
+
+<h4 class="text-center">Causas del movimiento</h4>
+{{ form.causa['id'] }}
+
+<div class="grid-x">
+    <div class="large-4 small-12">
+        <label>C</label>
+        <label>{{ form.causa.material_debil }} Material plástico débil</label>
+        <label>{{ form.causa.material_sensitivo }} Material sensitivo</label>
+        <label>{{ form.causa.material_colapsible }} Material colapsible</label>
+        <label>{{ form.causa.material_meteor_fisica }} Material meteorizado físicamente</label>
+        <label>{{ form.causa.material_meteor_quimica }} Material meteorizado químicamente</label>
+        <label>{{ form.causa.material_corte }} Material fallado por corte</label>
+        <label>{{ form.causa.material_fisurado }} Material fisurado o agrietado</label>
+        <label>{{ form.causa.orient_desfavorable }} Orientación desfavorable</label>
+        <label>{{ form.causa.contraste_perm }} Contraste de permeabilidad</label>
+        <label>{{ form.causa.constraste_rigidez }} Contraste de rigidez de materiales</label>
+        <label>{{ form.causa.meteor_congelamiento }} Meteorización por congelamiento / deshielo</label>
+        <label>{{ form.causa.meteor_expansion }} Meteorización por expansión / contracción</label>
+        <label>{{ form.causa.deforestacion }} Deforestación o ausencia de vegetación</label>
+    </div>
+    <div class="large-4 small-12">
+        <div div class="grid-x">
+            <div class="large-1 small-1">C</div>
+            <div class="large-1 small-1">D</div>
+        </div>
+        {{ _radio_causa(form.causa.mov_tectonico, 'Movimiento tectónico') }}
+        {{ _radio_causa(form.causa.sismo, 'Sismo') }}
+        {{ _radio_causa(form.causa.erupcion, 'Erupción volcánica') }}
+        {{ _radio_causa(form.causa.lluvias, 'Lluvias') }}
+        {{ _radio_causa(form.causa.viento, 'Viento') }}
+        {{ _radio_causa(form.causa.deshielo, 'Deshielo') }}
+        {{ _radio_causa(form.causa.glaciares, 'Acance/retroceso glaciares') }}
+        {{ _radio_causa(form.causa.romp_lagos, 'Rompimiento de lagos en cráteres') }}
+        {{ _radio_causa(form.causa.romp_presas, 'Rompimiento de presas') }}
+        {{ _radio_causa(form.causa.desembalse, 'Desembalse rápido de represas') }}
+        {{ _radio_causa(form.causa.embalse, 'Embalse') }}
+        {{ _radio_causa(form.causa.erosion_glaciares, 'Erosión del pie del talud por glaciares') }}
+        {{ _radio_causa(form.causa.erosion_superficial, 'Erosión superficial') }}
+    </div>
+    <div class="large-4 small-12">
+        <div div class="grid-x">
+            <div class="large-1 small-1">C</div>
+            <div class="large-1 small-1">D</div>
+        </div>
+        {{ _radio_causa(form.causa.soc_corriente_agua, 'Socavación del pie del talud por corriente de agua') }}
+        {{ _radio_causa(form.causa.soc_oleaje, 'Socavación del pie del talud por oleaje') }}
+        {{ _radio_causa(form.causa.excavacion_talud, 'Excavación del pie del talud') }}
+        {{ _radio_causa(form.causa.carga_corona, 'Carga en la corona del talud') }}
+        {{ _radio_causa(form.causa.erosion_subterranea, 'Erosión subterránea') }}
+        {{ _radio_causa(form.causa.irrigacion, 'Irrigación') }}
+        {{ _radio_causa(form.causa.mant_sistema_drenaje, 'Mantenimiento deficiente sistema de drenaje') }}
+        {{ _radio_causa(form.causa.escapes_tuberias, 'Escapes de agua de tuberias') }}
+        {{ _radio_causa(form.causa.mineria, 'Minería') }}
+        {{ _radio_causa(form.causa.disp_esteriles_escombros, 'Disposición deficiente de estériles/escombros') }}
+        {{ _radio_causa(form.causa.vibracion_artificial, 'Vibración artificial') }}
+        {{ _radio_causa(form.causa.otros, 'Otros') }}
+        {{ form.causa.distancia_sismo }} 
+        {{ form.causa.profundidad_sismo }} 
+    </div>
+</div>

@@ -4,10 +4,7 @@ from wtforms import (
     PasswordField, RadioField, TextAreaField
 )
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
-from .enums import (
-    UserRole, ESTADOS_ACTIVIDAD, ESTILOS_ACTIVIDAD, ESPACIAMIENTOS,
-    TIPOS_MOVIMIENTO, HUMEDADES, PLASTICIDADES, ORIGENES_SUELO,
-    VELOCIDADES, MODOS_MORFM, SEVERIDADES_MORFM)
+from .enums import *
 from .models.movimiento import Mapa, Foto, DetalleLitologia
 from .validators import UserExists
 
@@ -34,6 +31,19 @@ class NullableDecimalField(DecimalField):
             super(NullableDecimalField, self).process_formdata(valuelist)
         else:
             self.data = None
+
+
+class OptionalRadioField(RadioField):
+    def process_formdata(self, valuelist):
+        if valuelist and valuelist[0]:
+            super(OptionalRadioField, self).process_formdata(valuelist)
+        else:
+            self.data = None
+
+    def pre_validate(self, form):
+        for v, _ in self.choices:
+            if self.data == v:
+                break
 
 
 class CustomFieldList(FieldList):
@@ -255,6 +265,54 @@ class MorfometriaForm(Form):
     severidad = RadioField(choices=SEVERIDADES_MORFM)
 
 
+class CausaForm(Form):
+    id = IdField()
+
+    material_debil = BooleanField()
+    material_sensitivo = BooleanField()
+    material_colapsible = BooleanField()
+    material_meteor_fisica = BooleanField()
+    material_meteor_quimica = BooleanField()
+    material_corte = BooleanField()
+    material_fisurado = BooleanField()
+    orient_desfavorable = BooleanField()
+    contraste_perm = BooleanField()
+    constraste_rigidez = BooleanField()
+    meteor_congelamiento = BooleanField()
+    meteor_expansion = BooleanField()
+    deforestacion = BooleanField()
+
+    mov_tectonico = RadioField(choices=CAUSAS_MOV)
+    sismo = OptionalRadioField(choices=CAUSAS_MOV)
+    magnitud_sismo = StringField(validators=[Length(max=32)])
+    escala_sismo = StringField(validators=[Length(max=32)])
+
+    erupcion = OptionalRadioField(choices=CAUSAS_MOV)
+    lluvias = OptionalRadioField(choices=CAUSAS_MOV)
+    viento = OptionalRadioField(choices=CAUSAS_MOV)
+    deshielo = OptionalRadioField(choices=CAUSAS_MOV)
+    glaciares = OptionalRadioField(choices=CAUSAS_MOV)
+    romp_lagos = OptionalRadioField(choices=CAUSAS_MOV)
+    romp_presas = OptionalRadioField(choices=CAUSAS_MOV)
+    desembalse = OptionalRadioField(choices=CAUSAS_MOV)
+    embalse = OptionalRadioField(choices=CAUSAS_MOV)
+    erosion_glaciares = OptionalRadioField(choices=CAUSAS_MOV)
+    erosion_superficial = OptionalRadioField(choices=CAUSAS_MOV)
+
+    soc_corriente_agua = OptionalRadioField(choices=CAUSAS_MOV)
+    soc_oleaje = OptionalRadioField(choices=CAUSAS_MOV)
+    excavacion_talud = OptionalRadioField(choices=CAUSAS_MOV)
+    carga_corona = OptionalRadioField(choices=CAUSAS_MOV)
+    erosion_subterranea = OptionalRadioField(choices=CAUSAS_MOV)
+    irrigacion = OptionalRadioField(choices=CAUSAS_MOV)
+    mant_sistema_drenaje = OptionalRadioField(choices=CAUSAS_MOV)
+    escapes_tuberias = OptionalRadioField(choices=CAUSAS_MOV)
+    mineria = OptionalRadioField(choices=CAUSAS_MOV)
+    disp_esteriles_escombros = OptionalRadioField(choices=CAUSAS_MOV)
+    vibracion_artificial = OptionalRadioField(choices=CAUSAS_MOV)
+    otros = OptionalRadioField(choices=CAUSAS_MOV)
+
+
 class MovimientoForm(Form):
     encuestador = StringField(validators=[DataRequired()])
     fecha = DateTimeField(format='%Y-%m-%d')
@@ -266,3 +324,4 @@ class MovimientoForm(Form):
     litologia = FormField(LitologiaForm)
     clasificacion = FormField(ClasificacionForm)
     morfometria = FormField(MorfometriaForm)
+    causa = FormField(CausaForm)

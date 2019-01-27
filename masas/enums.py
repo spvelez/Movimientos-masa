@@ -88,3 +88,8 @@ SEVERIDADES_MORFM = [
     ('L', 'Media'),
     ('L', 'Severa'),
 ]
+
+CAUSAS_MOV = [
+    ('C', 'Causante'),
+    ('D', 'Detonante')
+]

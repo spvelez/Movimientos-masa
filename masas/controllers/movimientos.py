@@ -6,7 +6,7 @@ from masas.enums import ESPACIAMIENTOS
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
     Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia,
-    Clasificacion, Morfometria)
+    Clasificacion, Morfometria, Causa)
 
 bp = Blueprint('movimientos', __name__, template_folder='templates')
 
@@ -32,6 +32,7 @@ def create():
         mov.litologia.detalles = []
         mov.clasificacion = Clasificacion()
         mov.morfometria = Morfometria()
+        mov.causa = Causa()
 
         form.populate_obj(mov)
 
@@ -52,6 +53,7 @@ def edit(id):
     form = MovimientoForm(formData, obj=mov)
 
     if request.method == 'POST' and form.validate():
+        print('embalse: ', form.causa.embalse.data)
         form.populate_obj(mov)
 
         session.commit()

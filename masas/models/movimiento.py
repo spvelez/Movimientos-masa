@@ -256,6 +256,7 @@ class Causa(DbModel):
     romp_lagos = Column(String(1))
     romp_presas = Column(String(1))
     desembalse = Column(String(1))
+    embalse = Column(String(1))
     erosion_glaciares = Column(String(1))
     erosion_superficial = Column(String(1))
 
