@@ -9,6 +9,16 @@
     {% endif %}
 {% endmacro %}
 
+{%- macro input_errors(control) %}
+    {% if control.errors %}
+        <ul class="error-msg">
+            {% for error in control.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
 {%- macro error_summary() %}
     {% with errors = get_flashed_messages() %}
         {% if errors %}

@@ -1,5 +1,7 @@
 <h4 class="text-center">Localización geográfica y documental del evento</h3>
 
+{{ form.localizacion['id'] }}
+
 <div class="grid-x">
     <div class="large-5">
         <h6>Por división política</h6>
@@ -8,7 +10,7 @@
                 <label for="middle-label" class="text-right middle">País</label>
             </div>
             <div class="large-9 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.pais) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -16,7 +18,7 @@
                 <label for="middle-label" class="text-right middle">Dpto./Prov./Edo.</label>
             </div>
             <div class="large-9 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.provincia) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -24,7 +26,7 @@
                 <label for="middle-label" class="text-right middle">Municipio/Ciudad</label>
             </div>
             <div class="large-9 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.ciudad) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -32,7 +34,7 @@
                 <label for="middle-label" class="text-right middle">Localidad</label>
             </div>
             <div class="large-9 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.localidad) }}
             </div>
         </div>
     </div>
@@ -43,7 +45,7 @@
                 <label for="middle-label" class="text-right middle">Sitio</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.sitio) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -51,7 +53,7 @@
                 <label for="middle-label" class="text-right middle">Norte/Lat.</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.norte) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -59,7 +61,7 @@
                 <label for="middle-label" class="text-right middle">Este/Long.</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.este) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -67,7 +69,7 @@
                 <label for="middle-label" class="text-right middle">Proyección</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.proyeccion) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -75,31 +77,106 @@
                 <label for="middle-label" class="text-right middle">Altura sitio(m.s.n.m.)</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.localizacion.altura) }}
             </div>
         </div>
     </div>
     <div class="large-3">
         <h6>Referentes geográficos</h6>
-        <textarea rows="6"></textarea>
+        {{ helpers.input(form.localizacion.ref_geograficos) }}
     </div>
 </div>
 
-<h6>Documentación</h6>
-<table>
-    <thead>
-        <tr>
-            <th>Mapa/Plancha No.</th>
-            <th>Año</th>
-            <th>Escala</th>
-            <th>Editor</th>
-            <th>Fotografía No.</th>
-            <th>Año</th>
-            <th>Escala</th>
-            <th>Editor</th>
-        </tr>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
+<div class="grid-x">
+    <div class="large-5">
+        <h6>Mapas</h6>
+        <button type="button" 
+                class="add-row secondary button" 
+                data-target="#tb-mapas" 
+                data-template="#mapa-tmpl">Agregar</button>
+        <div class="table-scroll">
+            <table id="tb-mapas">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mapa/Plancha No.</th>
+                        <th>Año</th>
+                        <th>Escala</th>
+                        <th>Editor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mapa in form.localizacion.mapas %}
+                        <tr>
+                            <td><a href="#" class="remove-row">Quitar</a></td>
+                            <td>
+                                {{ mapa['id'] }}
+                                {{ mapa.nro_mapa }}
+                            </td>
+                            <td>{{ mapa.anio }}</td>
+                            <td>{{ mapa.escala }}</td>
+                            <td>{{ mapa.editor }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <script type="text/html" id="mapa-tmpl">
+            <tr>
+                <td><a href="#" class="remove-row">Quitar</a></td>
+                <td>
+                    <input name="localizacion-mapas-{i}-nro_mapa" type="text">
+                </td>
+                <td><input name="localizacion-mapas-{i}-anio" type="text"></td>
+                <td><input name="localizacion-mapas-{i}-escala" type="text"></td>
+                <td><input name="localizacion-mapas-{i}-editor" type="text"></td>
+            </tr>
+        </script>
+    </div>
+    <div class="large-5 large-offset-1 table-scroll">
+        <h6>Fotos</h6>
+        <button type="button" 
+                class="add-row secondary button" 
+                data-target="#tb-fotos" 
+                data-template="#foto-tmpl">Agregar</button>
+        <div class="table-scroll">
+            <table id="tb-fotos">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <th>Fotografía No.</th>
+                        <th>Año</th>
+                        <th>Escala</th>
+                        <th>Editor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for foto in form.localizacion.fotos %}
+                        <tr>
+                            <td><a href="#" class="remove-row">Quitar</a></td>
+                            <td>
+                                {{ foto['id'] }}
+                                {{ foto.nro_foto }}
+                            </td>
+                            <td>{{ foto.anio }}</td>
+                            <td>{{ foto.escala }}</td>
+                            <td>{{ foto.editor }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <script type="text/html" id="foto-tmpl">
+            <tr>
+                <td><a href="#" class="remove-row">Quitar</a></td>
+                <td>
+                    <input name="localizacion-fotos-{i}-nro_foto" type="text">
+                </td>
+                <td><input name="localizacion-fotos-{i}-anio" type="text"></td>
+                <td><input name="localizacion-fotos-{i}-escala" type="text"></td>
+                <td><input name="localizacion-fotos-{i}-editor" type="text"></td>
+            </tr>
+        </script>
+    </div>
+</div>

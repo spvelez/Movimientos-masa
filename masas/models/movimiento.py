@@ -131,7 +131,7 @@ class DetalleLitologia(DbModel):
     estructura = Column(String(128))
     dir_buzamiento = Column(String(64))
     buzamiento = Column(String(64))
-    espaciamiento = Column(String(8))
+    espaciamiento = Column(String(10))
 
     litologia_id = Column(Integer, ForeignKey('litologia.id'))
 
@@ -168,7 +168,7 @@ class Clasificacion(DbModel):
     organica_dos = Column(Integer)
 
     humedad_uno = Column(String(2))
-    humedad_uno = Column(String(2))
+    humedad_dos = Column(String(2))
 
     plasticidad_uno = Column(String(2))
     plasticidad_dos = Column(String(2))

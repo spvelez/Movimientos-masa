@@ -1,64 +1,67 @@
 <h4 class="text-center">Litología y estratigrafía</h4>
-<div class="grid-x">
-    <div class="large-3">
-        <h6>Descripción</h6>
-        <textarea rows="5"></textarea>
+
+{{ form.litologia['id'] }}
+
+<div class="grid-x grid-padding-x">
+    <div class="large-1 cell">
+        <label for="middle-label" class="text-right middle">Descripción</label>
     </div>
-    <div class="large-3  large-offset-1">
-        <h6>Estructura</h6>
-        <textarea rows="5"></textarea>
+    <div class="large-5 cell">
+        {{ form.litologia.descripcion(rows=4) }}
     </div>
-</div>
-<div class="grid-x">
-    <div class="large-3">
-        <h6>Orientación</h6>
-        <table>
-            <thead>
-                <tr>
-                    <th>DB</th>
-                    <th>B2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                </tr>
-                <tr>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="large-8 large-offset-1">
-        <h6>Espaciamiento (m)</h6>
-        <table>
-            <thead>
-                <tr>
-                    <th>&lt;2</th>
-                    <th>2 - 0.6</th>
-                    <th>0.6 - 0.2</th>
-                    <th>0.2 - 0.6</th>
-                    <th>&lt;0.6</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                </tr>
-                <tr>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="large-3 large-offset-3">
+        <label>DB: Dirección de buzamiento</label>
+        <label>BZ: buzamiento</label>
     </div>
 </div>
+
+<br>
+<button type="button" 
+        class="add-row secondary button" 
+        data-target="#tb-detalle-litologia" 
+        data-template="#detalle-litologia-tmpl">Agregar</button>
+<div class="table-scroll">
+    <table id="tb-detalle-litologia">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th colspan="2">Orientación</th>
+                <th colspan="{{ espaciamientos|length }}">Espaciamiento (m)</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Estructura</th>
+                <th width="100">DB</th>
+                <th width="100">BZ</th>
+                {% for e in espaciamientos %}
+                    <th class="text-center">{{ e }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in form.litologia.detalles %}
+                <tr>
+                    <td><a href="#" class="remove-row">Quitar</a></td>
+                    <td>{{ detalle.estructura }}</td>
+                    <td>{{ detalle.dir_buzamiento }}</td>
+                    <td>{{ detalle.buzamiento }}</td>
+                    {% for item in detalle.espaciamiento %}
+                        <td class="text-center">{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script type="text/html" id="detalle-litologia-tmpl">
+    <tr>
+        <td><a href="#" class="remove-row">Quitar</a></td>
+        <td><input name="litologia-detalles-{i}-estructura" type="text"></td>
+        <td><input name="litologia-detalles-{i}-dir_buzamiento" type="text"></td>
+        <td><input name="litologia-detalles-{i}-buzamiento" type="text"></td>
+        {% for e in espaciamientos %}
+            <td class="text-center"><input name="litologia-detalles-{i}-espaciamiento" type="radio" value="{{ e }}"></td>
+        {% endfor %}
+    </tr>
+</script>

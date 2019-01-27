@@ -1,4 +1,7 @@
 <h4 class="text-center">Actividad del movimiento</h4>
+
+{{ form.actividad['id'] }}
+
 <div class="grid-x">
     <div class="large-3">
         <h6>Fechas de ocurrencia</h6>
@@ -8,45 +11,50 @@
                 <label for="middle-label" class="text-right middle">Primer movimiento</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                {{ helpers.input(form.actividad.primera_fecha) }}
             </div>
         </div>
+        <div class="grid-x grid-padding-x">
+                <div class="large-4 cell">
+                    <label for="middle-label" class="text-right middle">Último movimiento</label>
+                </div>
+                <div class="large-8 cell">
+                    {{ helpers.input(form.actividad.ultima_fecha) }}
+                </div>
+            </div>
         <div class="grid-x grid-padding-x">
             <div class="large-4 cell">
                 <label for="middle-label" class="text-right middle">Edad (años)</label>
             </div>
             <div class="large-8 cell">
-                <input type="text" />
+                    {{ helpers.input(form.actividad.edad) }}
             </div>
         </div>
     </div>
     <div class="large-3">
         <h6>Estado</h6>
-        <label><input type="checkbox" /> Activo</label>
-        <label><input type="checkbox" /> Reactivado</label>
-        <label><input type="checkbox" /> Suspendido</label>
-        <label><input type="checkbox" /> Latente</label>
-        <label><input type="checkbox" /> Abandonado</label>
-        <label><input type="checkbox" /> Estabilizado</label>
-        <label><input type="checkbox" /> Relicto</label>
+        {% for item in form.actividad.estado %}
+            <label>{{ item }} {{ item.label }}</label>
+        {% endfor %}
+        {{ helpers.input_errors(form.actividad.estado) }}
     </div>
     <div class="large-3">
         <h6>Estilo</h6>
-        <label><input type="checkbox" /> Complejo</label>
-        <label><input type="checkbox" /> Compuesto</label>
-        <label><input type="checkbox" /> Múltiple</label>
-        <label><input type="checkbox" /> Sucesivo</label>
-        <label><input type="checkbox" /> Único</label>
-        <label><input type="checkbox" /> Enjambre</label>
+        {% for item in form.actividad.estilo %}
+            <label>{{ item }} {{ item.label }}</label>
+        {% endfor %}
+        {{ helpers.input_errors(form.actividad.estilo) }}
     </div>
     <div class="large-3">
+            {{ form.actividad.distribucion['id'] }}
+            {% set dist = form.actividad.distribucion %}
             <h6>Distribución</h6>
-            <label><input type="checkbox" /> Retrogresivo</label>
-            <label><input type="checkbox" /> Avanzado</label>
-            <label><input type="checkbox" /> Ensanchado</label>
-            <label><input type="checkbox" /> Confinado</label>
-            <label><input type="checkbox" /> Creciente</label>
-            <label><input type="checkbox" /> Decreciente</label>
-            <label><input type="checkbox" /> Móvil</label>
+            <label>{{ dist.retrogresivo }} Retrogresivo</label>
+            <label>{{ dist.avanzado }} Avanzado</label>
+            <label>{{ dist.ensanchado }} Ensanchado</label>
+            <label>{{ dist.confinado }} Confinado</label>
+            <label>{{ dist.creciente }} Creciente</label>
+            <label>{{ dist.decreciente }} Decreciente</label>
+            <label>{{ dist.movil }} Móvil</label>
         </div>
 </div>
