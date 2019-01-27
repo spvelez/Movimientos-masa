@@ -313,6 +313,32 @@ class CausaForm(Form):
     otros = OptionalRadioField(choices=CAUSAS_MOV)
 
 
+class CoberturaForm(Form):
+    id = IdField()
+
+    herbacea = NullableIntegerField()
+    bosque_selva = NullableIntegerField()
+    matorrales = NullableIntegerField()
+    cuerpo_agua = NullableIntegerField()
+    cultivos = NullableIntegerField()
+    construcciones = NullableIntegerField()
+    sin_cobertura = NullableIntegerField()
+
+
+class UsoSueloForm(Form):
+    id = IdField()
+
+    ganaderia = NullableIntegerField()
+    protegida = NullableIntegerField()
+    agricola = NullableIntegerField()
+    recreacion = NullableIntegerField()
+    zona_arq = NullableIntegerField()
+    zona_indus = NullableIntegerField()
+    vivienda = NullableIntegerField()
+    vias = NullableIntegerField()
+    mineria = NullableIntegerField()
+
+
 class MovimientoForm(Form):
     encuestador = StringField(validators=[DataRequired()])
     fecha = DateTimeField(format='%Y-%m-%d')
@@ -325,3 +351,5 @@ class MovimientoForm(Form):
     clasificacion = FormField(ClasificacionForm)
     morfometria = FormField(MorfometriaForm)
     causa = FormField(CausaForm)
+    cobertura = FormField(CoberturaForm)
+    uso_suelo = FormField(UsoSueloForm)

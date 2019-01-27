@@ -299,7 +299,7 @@ class UsoSuelo(DbModel):
 
     ganaderia = Column(Integer)
     area_protegida = Column(Integer)
-    agricula = Column(Integer)
+    agricola = Column(Integer)
     recreacion = Column(Integer)
     arqueologica = Column(Integer)
     industrial = Column(Integer)
