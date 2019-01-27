@@ -1,120 +1,186 @@
 <div class="grid-x">
-    <div class="large-4">
+    <div class="large-4 small-12">
         <h6>General</h6>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Diferencia de altura corona a punta (m)</label>
+                <label for="middle-label" class="middle">Diferencia de altura corona a punta (m)</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.dif_corona_punta }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Longitud horizontal corona a punta (m)</label>
+                <label for="middle-label" class="middle">Longitud horizontal corona a punta (m)</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.long_corona_punta }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Fahrböschung</label>
+                <label for="middle-label" class="middle">Fahrböschung</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.fahrboschung }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Pendiente de ladera en post-falla</label>
+                <label for="middle-label" class="middle">Pendiente de ladera en post-falla</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.post_falla }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Pendiente de ladera en pre-falla</label>
+                <label for="middle-label" class="middle">Pendiente de ladera en pre-falla</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.pre_falla }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Dirección del movimiento</label>
+                <label for="middle-label" class="middle">Dirección del movimiento</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.direccion }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
             <div class="large-9 cell">
-                <label for="middle-label" class="text-right middle">Azimut del talud</label>
+                <label for="middle-label" class="middle">Azimut del talud</label>
             </div>
             <div class="large-3 cell">
-                <input type="text" />
+                {{ form.morfometria.azimut }}
             </div>
         </div>
     </div>    
-    <div class="large-8">
+    <div class="large-4 small-12">
         <h6>Dimensiones</h6>
         <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Profundida de la superficie de falla Dr(m)</label>
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Profundida de la superficie de falla Dr(m)</label>
             </div>
-            <div class="large-2 cell">
-                <input type="text" />
-            </div>
-        </div>
-        <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Ancho de la superficie de falla Wr(m)</label>
-            </div>
-            <div class="large-2 cell">
-                <input type="text" />
+            <div class="large-3 cell">
+                {{ form.morfometria.profundidad_falla }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Longitud de la superficie de falla Lr(m)</label>
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Ancho de la superficie de falla Wr(m)</label>
             </div>
-            <div class="large-2 cell">
-                <input type="text" />
-            </div>
-        </div>
-        <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Espesor de la masa desplazada Dd(m)</label>
-            </div>
-            <div class="large-2 cell">
-                <input type="text" />
+            <div class="large-3 cell">
+                {{ form.morfometria.ancho_falla }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Ancho de la masa desplazada Wd(m)</label>
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Longitud de la superficie de falla Lr(m)</label>
             </div>
-            <div class="large-2 cell">
-                <input type="text" />
-            </div>
-        </div>
-        <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Longitud de la masa desplazada Ld(m)</label>
-            </div>
-            <div class="large-2 cell">
-                <input type="text" />
+            <div class="large-3 cell">
+                {{ form.morfometria.longitud_falla }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
-            <div class="large-5 cell">
-                <label for="middle-label" class="text-right middle">Longitud total L(m)</label>
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Espesor de la masa desplazada Dd(m)</label>
             </div>
-            <div class="large-2 cell">
-                <input type="text" />
+            <div class="large-3 cell">
+                {{ form.morfometria.espesor_masa }}
             </div>
         </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Ancho de la masa desplazada Wd(m)</label>
+            </div>
+            <div class="large-3 cell">
+            {{ form.morfometria.ancho_masa }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Longitud de la masa desplazada Ld(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.longitud_masa }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Longitud total L(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.longitud_total }}
+            </div>
+        </div>        
+    </div>
+    <div class="large-4 small-12">
+        <br>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Volumen inicial(m<sup>3</sup>)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.volumen_inicial }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Volumen desplazado(m<sup>3</sup>)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.volumen_desplazado }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Área inicial(km<sup>2</sup>)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.area_inicial }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Área total afectada(km<sup>2</sup>)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.area_total }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Distancia de viaje(km)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.distancia_viaje }}
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-9 cell">
+                <label for="middle-label" class="middle">Runup(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ form.morfometria.runup }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid-x margin-top-2">
+    <div class="large-4 small-12">
+        <h6>Modo</h6>
+        {% for item in form.morfometria.modo %}
+            {{ item }} {{ item.label }} <br>
+        {% endfor %}
+    </div>
+    <div class="large-4 small-12">
+        <h6>Severidad</h6>
+        {% for item in form.morfometria.severidad %}
+            {{ item }} {{ item.label }} <br>
+        {% endfor %}
     </div>
 </div>

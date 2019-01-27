@@ -6,7 +6,7 @@ from masas.enums import ESPACIAMIENTOS
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
     Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia,
-    Clasificacion)
+    Clasificacion, Morfometria)
 
 bp = Blueprint('movimientos', __name__, template_folder='templates')
 
@@ -31,6 +31,7 @@ def create():
         mov.litologia = Litologia()
         mov.litologia.detalles = []
         mov.clasificacion = Clasificacion()
+        mov.morfometria = Morfometria()
 
         form.populate_obj(mov)
 

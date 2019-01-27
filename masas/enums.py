@@ -77,3 +77,14 @@ VELOCIDADES = [
     ('MUYL', 'Muy lento'),
     ('EXTL', 'Extra lento'),
 ]
+
+MODOS_MORFM = [
+    ('O', 'Ondulación'),
+    ('E', 'Escalonamiento')
+]
+
+SEVERIDADES_MORFM = [
+    ('L', 'Leve'),
+    ('L', 'Media'),
+    ('L', 'Severa'),
+]

@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 from .enums import (
     UserRole, ESTADOS_ACTIVIDAD, ESTILOS_ACTIVIDAD, ESPACIAMIENTOS,
     TIPOS_MOVIMIENTO, HUMEDADES, PLASTICIDADES, ORIGENES_SUELO,
-    VELOCIDADES)
+    VELOCIDADES, MODOS_MORFM, SEVERIDADES_MORFM)
 from .models.movimiento import Mapa, Foto, DetalleLitologia
 from .validators import UserExists
 
@@ -226,6 +226,35 @@ class ClasificacionForm(Form):
     vmedia = StringField(validators=[Length(max=128)])
 
 
+class MorfometriaForm(Form):
+    id = IdField()
+
+    dif_corona_punta = NullableDecimalField(places=2)
+    long_corona_punta = NullableDecimalField(places=2)
+    fahrboschung = NullableDecimalField(places=2)
+    pre_falla = NullableDecimalField(places=2)
+    post_falla = NullableDecimalField(places=2)
+    direccion = StringField(validators=[Length(max=16)])
+    azimut = NullableDecimalField(places=2)
+
+    profundidad_falla = NullableDecimalField(places=2)
+    ancho_falla = NullableDecimalField(places=2)
+    longitud_falla = NullableDecimalField(places=2)
+    espesor_masa = NullableDecimalField(places=2)
+    ancho_masa = NullableDecimalField(places=2)
+    longitud_masa = NullableDecimalField(places=2)
+    longitud_total = NullableDecimalField(places=2)
+    volumen_inicial = NullableDecimalField(places=2)
+    volumen_desplazado = NullableDecimalField(places=2)
+    area_inicial = NullableDecimalField(places=2)
+    area_total = NullableDecimalField(places=2)
+    distancia_viaje = NullableDecimalField(places=2)
+    runup = NullableDecimalField(places=2)
+
+    modo = RadioField(choices=MODOS_MORFM)
+    severidad = RadioField(choices=SEVERIDADES_MORFM)
+
+
 class MovimientoForm(Form):
     encuestador = StringField(validators=[DataRequired()])
     fecha = DateTimeField(format='%Y-%m-%d')
@@ -235,3 +264,5 @@ class MovimientoForm(Form):
     localizacion = FormField(LocalizacionForm)
     actividad = FormField(ActividadForm)
     litologia = FormField(LitologiaForm)
+    clasificacion = FormField(ClasificacionForm)
+    morfometria = FormField(MorfometriaForm)
