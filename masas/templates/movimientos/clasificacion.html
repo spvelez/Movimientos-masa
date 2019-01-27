@@ -1,115 +1,180 @@
 <h4 class="text-center">Clasificación del movimiento</h4>
+
+{{ form.clasificacion['id'] }}
+
 <div class="grid-x">
-    <div class="large-4">
+    <div class="large-4 small-12">
         <h6>Tipo de movimiento</h6>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Caída
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Volcamiento
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Deslizamiento rotacional
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Deslizamiento traslacional
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Propagación lateral
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Reptación
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Flujo
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Deformaciones g. profundas
+        <div class="grid-x">
+            <div class="large-1 small-1">
+                1 <br>
+                {% for item in form.clasificacion.tipo_uno %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-1 small-1">
+                2 <br>
+                {% for item in form.clasificacion.tipo_dos %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-8 small-10">
+                <br>
+                {% for item in form.clasificacion.tipo_uno %}
+                    <p>{{ item.label }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <div class="large-4">
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Roca
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Detritos
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Tierra
-        <br>
+        <h6>Material</h6>
+        <div class="grid-x">
+            <label class="small-3 large-2 large-offset-5 small-offset-5 text-center">%1</label>
+            <label class="small-3 large-2 large-offset-1 small-offset-1 text-center">%2</label>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Roca</label>
+            <div class="small-3 large-2">{{ form.clasificacion.roca_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.roca_dos }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Detritos</label>
+            <div class="small-3 large-2">{{ form.clasificacion.detritos_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.detritos_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Detritos</label>
+            <div class="small-3 large-2">{{ form.clasificacion.tierra_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.tierra_dos }}</div>
+        </div>
+
         <h6>Suelos ingeniería</h6>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Bloques
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Bloques</label>
+            <div class="small-3 large-2">{{ form.clasificacion.bloques_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.bloques_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Cantos</label>
+            <div class="small-3 large-2">{{ form.clasificacion.cantos_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.cantos_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Grava</label>
+            <div class="small-3 large-2">{{ form.clasificacion.grava_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.grava_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Arena</label>
+            <div class="small-3 large-2">{{ form.clasificacion.arena_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.arena_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">Finos</label>
+            <div class="small-3 large-2">{{ form.clasificacion.finos_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.finos_dos }}</div>
+        </div>
+        <div class="grid-x">
+            <label class="small-5 large-5 middle">M.O.</label>
+            <div class="small-3 large-2">{{ form.clasificacion.organica_uno }}</div>
+            <div class="small-3 large-2 small-offset-1 large-offset-1">
+                {{ form.clasificacion.organica_dos }}</div>
+        </div>
         <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Cantos
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Grava
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Arena
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Finos
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        M.O.
-        <br>
+        <small>M.O.: Materia orgánica. turba</small>
     </div>
     <div class="large-4">
         <h6>Humedad del suelo</h6>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Seco
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Lig. húmedo
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Húmedo
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Muy húmedo
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Mojado
+
+        <div class="grid-x">
+            <div class="large-1 small-2">
+                1 <br>
+                {% for item in form.clasificacion.humedad_uno %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-1 small-2">
+                2 <br>
+                {% for item in form.clasificacion.humedad_dos %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-8 small-8">
+                <br>
+                {% for item in form.clasificacion.humedad_uno %}
+                    <p>{{ item.label }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
         <br>
         <h6>Plasticidad</h6>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Alta
+        
+        <div class="grid-x">
+            <div class="large-1 small-2">
+                1 <br>
+                {% for item in form.clasificacion.plasticidad_uno %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-1 small-2">
+                2 <br>
+                {% for item in form.clasificacion.plasticidad_dos %}
+                    <p>{{ item(class='no-margin') }}</p>
+                {% endfor %}
+            </div>
+            <div class="large-8 small-8">
+                <br>
+                {% for item in form.clasificacion.plasticidad_uno %}
+                    <p>{{ item.label }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<div class="grid-x">
+    <div class="large-4 small-12 padding-right-1">
+        <h6>Origen del suelo</h6>
+        {% for item in form.clasificacion.origen %}
+            {{ item }} {{ item.label }}<br>
+        {% endfor %}
+
         <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Media
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        Baja
-        <br>
-        <input type="text" style="max-width:50px;display:inline" />
-        <input type="text" style="max-width:50px;display:inline" />
-        No plástico
+        <h6>Clasificación USCS</h6>
+        {{ form.clasificacion.uscs(rows="4") }}
+    </div>
+    <div class="large-4 small-12 padding-right-1">
+        <h6>Otras características</h6>
+        <label>{{ form.clasificacion.canalizado }} Movimiento canalizado</label>
+        <label>{{ form.clasificacion.no_canalizado }} Movimiento no canalizado</label>
+        <label>{{ form.clasificacion.licuacion }} Licuación</label>
+        <label>Otra característica</label>
+        {{ form.clasificacion.otra_caracteristica }}
+    </div>
+    <div class="large-4">
+        <h6>Velocidad</h6>
+        <div class="grid-x">
+            <div class="small-6">
+                {% for item in form.clasificacion.velocidad %}
+                    {{ item }} {{ item.label }}<br>
+                {% endfor %}
+            </div>
+            <div class="small-6">
+                Vmax. {{ form.clasificacion.vmax }}
+                Vmedia {{ form.clasificacion.vmedia }}
+            </div>
+        </div>
     </div>
 </div>

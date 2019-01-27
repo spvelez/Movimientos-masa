@@ -36,3 +36,44 @@ ESTILOS_ACTIVIDAD = [
 ESPACIAMIENTOS = [
     '>2', '2 - 0.6', '0.6 - 0.2', '0.2 - 0.06', '<0.06'
 ]
+
+TIPOS_MOVIMIENTO = [
+    ('C', 'Caída'),
+    ('V', 'Volcamiento'),
+    ('DR', 'Deslizamiento rotacional'),
+    ('DT', 'Deslizamiento traslacional'),
+    ('PL', 'Propagación lateral'),
+    ('R', 'Reptación'),
+    ('F', 'Flujo'),
+    ('DGP', 'Deformaciones grav. profundas')
+]
+
+HUMEDADES = [
+    ('S', 'Seco'),
+    ('LH', 'Lig. húmedo'),
+    ('H', 'Húmedo'),
+    ('MH', 'Muy húmedo'),
+    ('MJ', 'Mojado')
+]
+
+PLASTICIDADES = [
+    ('A', 'Alta'),
+    ('M', 'Media'),
+    ('B', 'Baja'),
+    ('NP', 'No plástico'),
+]
+
+ORIGENES_SUELO = [
+    ('R', 'Residual'),
+    ('S', 'Sedimentario')
+]
+
+VELOCIDADES = [
+    ('EXTR', 'Extra rápido'),
+    ('MUYR', 'Muy rápido'),
+    ('RAP', 'Rápido'),
+    ('MOD', 'Moderado'),
+    ('LEN', 'Lento'),
+    ('MUYL', 'Muy lento'),
+    ('EXTL', 'Extra lento'),
+]

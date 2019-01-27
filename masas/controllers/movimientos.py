@@ -5,7 +5,8 @@ from masas.database import session
 from masas.enums import ESPACIAMIENTOS
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
-    Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia)
+    Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia,
+    Clasificacion)
 
 bp = Blueprint('movimientos', __name__, template_folder='templates')
 
@@ -29,6 +30,7 @@ def create():
         mov.actividad.distribucion = Distribucion()
         mov.litologia = Litologia()
         mov.litologia.detalles = []
+        mov.clasificacion = Clasificacion()
 
         form.populate_obj(mov)
 

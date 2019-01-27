@@ -25,7 +25,15 @@
     padding-right: .9rem;
 }
 
+.no-margin {
+    margin: 0;
+}
+
 ul.error-msg {
     list-style-type: none;
     margin-left: 0;
+}
+
+th.text-center {
+    text-align: center !important;
 }

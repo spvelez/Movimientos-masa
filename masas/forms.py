@@ -5,7 +5,9 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 from .enums import (
-    UserRole, ESTADOS_ACTIVIDAD, ESTILOS_ACTIVIDAD, ESPACIAMIENTOS)
+    UserRole, ESTADOS_ACTIVIDAD, ESTILOS_ACTIVIDAD, ESPACIAMIENTOS,
+    TIPOS_MOVIMIENTO, HUMEDADES, PLASTICIDADES, ORIGENES_SUELO,
+    VELOCIDADES)
 from .models.movimiento import Mapa, Foto, DetalleLitologia
 from .validators import UserExists
 
@@ -173,6 +175,55 @@ class LitologiaForm(Form):
     descripcion = TextAreaField()
     detalles = CustomFieldList(FormField(DetalleLitologiaForm),
                                DetalleLitologia)
+
+
+class ClasificacionForm(Form):
+    id = IdField()
+
+    sistema = StringField(validators=[Length(max=128)])
+    nombre = StringField(validators=[Length(max=128)])
+
+    tipo_uno = RadioField(choices=TIPOS_MOVIMIENTO)
+    tipo_dos = RadioField(choices=TIPOS_MOVIMIENTO)
+
+    roca_uno = NullableIntegerField()
+    roca_dos = NullableIntegerField()
+    detritos_uno = NullableIntegerField()
+    detritos_dos = NullableIntegerField()
+    tierra_uno = NullableIntegerField()
+    tierra_dos = NullableIntegerField()
+
+    bloques_uno = NullableIntegerField()
+    bloques_dos = NullableIntegerField()
+    cantos_uno = NullableIntegerField()
+    cantos_dos = NullableIntegerField()
+    grava_uno = NullableIntegerField()
+    grava_dos = NullableIntegerField()
+    arena_uno = NullableIntegerField()
+    arena_dos = NullableIntegerField()
+    finos_uno = NullableIntegerField()
+    finos_dos = NullableIntegerField()
+    organica_uno = NullableIntegerField()
+    organica_dos = NullableIntegerField()
+
+    humedad_uno = RadioField(choices=HUMEDADES)
+    humedad_dos = RadioField(choices=HUMEDADES)
+
+    plasticidad_uno = RadioField(choices=PLASTICIDADES)
+    plasticidad_dos = RadioField(choices=PLASTICIDADES)
+
+    origen = RadioField(choices=ORIGENES_SUELO)
+
+    uscs = TextAreaField()
+
+    canalizado = BooleanField()
+    no_canalizado = BooleanField()
+    licuacion = BooleanField()
+    otra_caracteristica = StringField(validators=[Length(max=128)])
+
+    velocidad = RadioField(choices=VELOCIDADES)
+    vmax = StringField(validators=[Length(max=128)])
+    vmedia = StringField(validators=[Length(max=128)])
 
 
 class MovimientoForm(Form):
