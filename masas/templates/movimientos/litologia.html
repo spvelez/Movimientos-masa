@@ -43,7 +43,10 @@
             {% for detalle in form.litologia.detalles %}
                 <tr>
                     <td><a href="#" class="remove-row">Quitar</a></td>
-                    <td>{{ detalle.estructura }}</td>
+                    <td>
+                        {{ detalle['id'] }}
+                        {{ detalle.estructura }}
+                    </td>
                     <td>{{ detalle.dir_buzamiento }}</td>
                     <td>{{ detalle.buzamiento }}</td>
                     {% for item in detalle.espaciamiento %}

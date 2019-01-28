@@ -8,13 +8,27 @@
         <thead>
             <tr>
                 <th></th>
-                <th>Nombre</th>
-                <th>Login</th>
-                <th>Rol</th>
+                <th>Id</th>
+                <th>Encuestador</th>
+                <th>Fecha</th>
+                <th>Institución</th>
+                <th>Código</th>
             </tr>
         </thead>
         <tbody>
-
+            {% for mov in movimientos %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('.edit', id=mov.id)}}">Editar</a> |
+                        <a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a>
+                    </td>
+                    <td>{{ mov.id }}</td>
+                    <td>{{ mov.encuestador }}</td>
+                    <td>{{ mov.fecha }}</td>
+                    <td>{{ mov.institucion }}</td>
+                    <td>{{ mov.codigo }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
                 

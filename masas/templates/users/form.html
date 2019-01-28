@@ -43,6 +43,15 @@
     </div>
 
     <div class="grid-x grid-padding-x">
+        <div class="large-2 cell">
+            <label for="middle-label" class="text-right middle">Rol</label>
+        </div>
+        <div class="large-3 cell">
+            {{ helpers.input(form.role) }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-x">
         <div class="large-3 large-offset-2 cell">
                 <a href="{{ url_for('.index') }}" class="secondary button">Cancelar</a>
                 <button type="submit" class="button">Guardar</button>

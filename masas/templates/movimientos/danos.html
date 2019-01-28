@@ -66,7 +66,10 @@
         <tbody>
             {% for detalle in form.dano.detalles %}
                 <tr>
-                    <td><a href="#" class="remove-row">Quitar</a></td>
+                    <td>
+                        <a href="#" class="remove-row">Quitar</a>
+                        {{ detalle['id'] }}
+                    </td>
                     {% for item in detalle.origen %}
                         <td>{{ item }}</td>
                     {% endfor %}
