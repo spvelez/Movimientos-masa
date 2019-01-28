@@ -22,4 +22,9 @@ $(function () {
 
         addRow($(table), template);
     });
+
+    $('.datepick').fdatepicker({
+        format: 'yyyy-mm-dd',
+        language: 'es' 
+    });
 });

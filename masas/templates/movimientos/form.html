@@ -1,7 +1,14 @@
 {% import 'helpers.html' as helpers %}
 {% extends '/layout.html' %}
 {% block title%}Crear movimiento{%endblock %}
-{% block scripts %}<script src="/static/js/movimiento-form.js"></script>{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="/static/css/foundation-datepicker.min.css">
+{% endblock %}
+{% block scripts %}
+    <script src="/static/js/vendor/foundation-datepicker.min.js"></script>
+    <script src="/static/js/vendor/foundation-datepicker.es.js"></script>
+    <script src="/static/js/movimiento-form.js"></script>
+{% endblock %}
 {% block body %}
     <h3>Crear movimiento</h1>
         

@@ -11,7 +11,7 @@
                 <label for="middle-label" class="text-right middle">Primer movimiento</label>
             </div>
             <div class="large-8 cell">
-                {{ helpers.input(form.actividad.primera_fecha) }}
+                {{ helpers.input(form.actividad.primera_fecha, class='datepick') }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -19,7 +19,7 @@
                     <label for="middle-label" class="text-right middle">Último movimiento</label>
                 </div>
                 <div class="large-8 cell">
-                    {{ helpers.input(form.actividad.ultima_fecha) }}
+                    {{ helpers.input(form.actividad.ultima_fecha, class='datepick') }}
                 </div>
             </div>
         <div class="grid-x grid-padding-x">

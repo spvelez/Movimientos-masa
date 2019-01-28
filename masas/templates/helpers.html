@@ -1,5 +1,5 @@
 {%- macro input(control) %}
-    {{ control }}                
+    {{ control(**kwargs) }}                
     {% if control.errors %}
         <ul class="error-msg">
             {% for error in control.errors %}
