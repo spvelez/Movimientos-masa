@@ -5,7 +5,8 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
 from .enums import *
-from .models.movimiento import Mapa, Foto, DetalleLitologia
+from .models.movimiento import (
+    Mapa, Foto, DetalleLitologia, DocumentoReferencia, DetalleDano)
 from .validators import UserExists
 
 
@@ -339,6 +340,68 @@ class UsoSueloForm(Form):
     mineria = NullableIntegerField()
 
 
+class DocumentoReferenciaForm(Form):
+    id = IdField()
+
+    autores = StringField(validators=[Length(max=256)])
+    anio = StringField(validators=[Length(max=4)])
+    titulo = StringField(validators=[Length(max=128)])
+    libro = StringField(validators=[Length(max=128)])
+    editor = StringField(validators=[Length(max=128)])
+    ciudad = StringField(validators=[Length(max=128)])
+    paginas = StringField(validators=[Length(max=128)])
+
+
+class EfectoForm(Form):
+    id = IdField()
+
+    tipo = RadioField(choices=[(x, x) for x in ['I', 'II', 'III',
+                                                'IV', 'V', 'VI']])
+
+    longitud_presa = NullableDecimalField(places=2)
+    altura = NullableDecimalField(places=2)
+    ancho = NullableDecimalField(places=2)
+    talud_arriba = NullableDecimalField(places=2)
+    talud_abajo = NullableDecimalField(places=2)
+    volumen_presa = NullableDecimalField(places=2)
+
+    condicion_presa = RadioField(choices=CONDICIONES_PRESA)
+
+    longitud_embalse = NullableDecimalField(places=2)
+    area_embalse = NullableDecimalField(places=2)
+    volumen_embalse = NullableDecimalField(places=2)
+    nivel_agua_corona = NullableDecimalField(places=2)
+    area_cuenca = NullableDecimalField(places=2)
+    caudal_entrada = NullableDecimalField(places=2)
+    caudal_salida = NullableDecimalField(places=2)
+    tasa_llenado = NullableDecimalField(places=2)
+
+    tsunami = BooleanField()
+    empalizada = BooleanField()
+    sedimentacion = BooleanField()
+    sismo = BooleanField()
+
+
+class DetalleDanoForm(Form):
+    id = IdField()
+
+    origen = RadioField(choices=ORIGENES_DANO)
+    tipo = StringField(validators=[Length(max=128)])
+    unidad = StringField(validators=[Length(max=128)])
+    intensidad = RadioField(choices=INTENSIDADES_DANO)
+    valor = DecimalField(places=2)
+
+
+class DanoForm(Form):
+    id = IdField()
+
+    muertos = NullableIntegerField()
+    heridos = NullableIntegerField()
+    damnificados = NullableIntegerField()
+
+    detalles = CustomFieldList(FormField(DetalleDanoForm), DetalleDano)
+
+
 class MovimientoForm(Form):
     encuestador = StringField(validators=[DataRequired()])
     fecha = DateTimeField(format='%Y-%m-%d')
@@ -351,5 +414,9 @@ class MovimientoForm(Form):
     clasificacion = FormField(ClasificacionForm)
     morfometria = FormField(MorfometriaForm)
     causa = FormField(CausaForm)
-    cobertura = FormField(CoberturaForm)
+    cobertura_suelo = FormField(CoberturaForm)
     uso_suelo = FormField(UsoSueloForm)
+    documentos_ref = CustomFieldList(FormField(DocumentoReferenciaForm),
+                                     DocumentoReferencia)
+    efecto_secundario = FormField(EfectoForm)
+    dano = FormField(DanoForm)

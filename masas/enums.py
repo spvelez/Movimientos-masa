@@ -93,3 +93,33 @@ CAUSAS_MOV = [
     ('C', 'Causante'),
     ('D', 'Detonante')
 ]
+
+CONDICIONES_PRESA = [
+    ('CORREB', 'Corona rebosada'),
+    ('FILTRA', 'Filtración'),
+    ('TUBNAT', 'Tubificación natural'),
+    ('OBSPAR', 'Obstrucción parcial'),
+    ('ERPATA', 'Erosión de la pata'),
+    ('ESTART', 'Estabilización artificial'),
+    ('TUBART', 'Tubificación artificial'),
+    ('LIGSOC', 'Ligeramente socavada'),
+    ('MODSOC', 'Moderadamente socavada'),
+    ('FUESOC', 'Fuertemente socavada'),
+    ('COMSOC', 'Completamente socavada'),
+    ('PARFAL', 'Parcialmente fallada'),
+    ('FALLA', 'Fallada'),
+    ('LLENA', 'Llenándose'),
+]
+
+ORIGENES_DANO = [
+    ('INF', 'Infraestrutura'),
+    ('AE', 'Actividades económicas'),
+    ('DA', 'Daños ambientales')
+]
+
+INTENSIDADES_DANO = [
+    ('DL', 'Daño leve'),
+    ('DM', 'Daño moderado'),
+    ('DS', 'Daño severo'),
+    ('DT', 'Destrucción total')
+]

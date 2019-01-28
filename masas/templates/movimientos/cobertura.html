@@ -1,16 +1,19 @@
 <h4 class="text-center">Cobertura y uso del suelo</h4>
-{{ form.cobertura['id'] }}
+{{ form.cobertura_suelo['id'] }}
 {{ form.uso_suelo['id'] }}
 
 <div class="grid-x">
     <div class="large-6 small-12">
         <h6>Tipo cobertura</h6>
         <div class="grid-x">
+            <div class="large-2 large-offset-4 text-center">%</div>
+        </div>
+        <div class="grid-x">
             <div class="large-4 cell">
                 <label for="middle-label" class="middle">Veg. herbácea</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.herbacea) }}
+                {{ helpers.input(form.cobertura_suelo.herbacea) }}
             </div>
         </div>
         <div class="grid-x">
@@ -18,7 +21,7 @@
                 <label for="middle-label" class="middle">Bosque/Selva</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.bosque_selva) }}
+                {{ helpers.input(form.cobertura_suelo.bosque_selva) }}
             </div>
         </div>
         <div class="grid-x">
@@ -26,7 +29,7 @@
                 <label for="middle-label" class="middle">Matorrales</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.matorrales) }}
+                {{ helpers.input(form.cobertura_suelo.matorrales) }}
             </div>
         </div>
         <div class="grid-x">
@@ -34,7 +37,7 @@
                 <label for="middle-label" class="middle">Cuerpo agua</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.cuerpo_agua) }}
+                {{ helpers.input(form.cobertura_suelo.cuerpo_agua) }}
             </div>
         </div>
         <div class="grid-x">
@@ -42,7 +45,7 @@
                 <label for="middle-label" class="middle">Cultivos</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.cultivos) }}
+                {{ helpers.input(form.cobertura_suelo.cultivos) }}
             </div>
         </div>
         <div class="grid-x">
@@ -50,7 +53,7 @@
                 <label for="middle-label" class="middle">Construcciones</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.construcciones) }}
+                {{ helpers.input(form.cobertura_suelo.construcciones) }}
             </div>
         </div>
         <div class="grid-x">
@@ -58,12 +61,15 @@
                 <label for="middle-label" class="middle">Sin cobertura</label>
             </div>
             <div class="large-2 cell">
-                {{ helpers.input(form.cobertura.sin_cobertura) }}
+                {{ helpers.input(form.cobertura_suelo.sin_cobertura) }}
             </div>
         </div>
     </div>
     <div class="large-6 small-12">
         <h6>Tipo uso</h6>
+        <div class="grid-x">
+            <div class="large-2 large-offset-4 text-center">%</div>
+        </div>
         <div class="grid-x">
             <div class="large-4 cell">
                 <label for="middle-label" class="middle">Ganadería</label>

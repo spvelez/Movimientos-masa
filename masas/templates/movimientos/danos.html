@@ -1,4 +1,6 @@
 <h6>Población</h6>
+{{ form.dano['id'] }}
+
 <div class="grid-x">
     <div class="large-4">
         <div class="grid-x grid-padding-x">
@@ -6,7 +8,7 @@
                 <label for="middle-label" class="text-right middle">Número de muertos</label>
             </div>
             <div class="large-4 cell">
-                <input type="text" />
+                {{ helpers.input(form.dano.muertos) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -14,7 +16,7 @@
                 <label for="middle-label" class="text-right middle">Número de heridos</label>
             </div>
             <div class="large-4 cell">
-                <input type="text" />
+                    {{ helpers.input(form.dano.heridos) }}
             </div>
         </div>
         <div class="grid-x grid-padding-x">
@@ -22,7 +24,7 @@
                 <label for="middle-label" class="text-right middle">Número damnificados</label>
             </div>
             <div class="large-4 cell">
-                <input type="text" />
+                    {{ helpers.input(form.dano.damnificados) }}
             </div>
         </div>
     </div>
@@ -35,37 +37,63 @@
         NC: No cuantificable
     </div>
 </div>
+<br>
 
-<table>
-    <thead>
-        <tr>
-            <th colspan="10" class="text-center">Infraestructura (Inf) / Actividades económicas (AE) / Daños ambientales (DA)</th>
-        </tr>
-        <tr>
-            <th>INF</th>
-            <th>AE</th>
-            <th>DA</th>
-            <th>Tipo</th>
-            <th>Unidad de medida</th>
-            <th>DL</th>
-            <th>DM</th>
-            <th>DS</th>
-            <th>DT</th>
-            <th>Valos USS</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="checkbox" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-            <td><input type="text" /></td>
-        </tr>
-    </tbody>
-</table>
+<button type="button" 
+        class="add-row secondary button" 
+        data-target="#tb-detalle-dano" 
+        data-template="#detalle-dano-tmpl">Agregar</button>
+<div class="table-scroll">
+    <table id="tb-detalle-dano">
+        <thead>
+            <tr>
+                <th colspan="11" class="text-center">Infraestructura (Inf) / Actividades económicas (AE) / Daños ambientales (DA)</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>INF</th>
+                <th>AE</th>
+                <th>DA</th>
+                <th>Tipo</th>
+                <th>Unidad de medida</th>
+                <th>DL</th>
+                <th>DM</th>
+                <th>DS</th>
+                <th>DT</th>
+                <th>Valos USS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in form.dano.detalles %}
+                <tr>
+                    <td><a href="#" class="remove-row">Quitar</a></td>
+                    {% for item in detalle.origen %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                    <td>{{ detalle.tipo }}</td>
+                    <td>{{ detalle.unidad }}</td>
+                    {% for item in detalle.intensidad %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                    <td>{{ detalle.valor }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script type="text/html" id="detalle-dano-tmpl">
+    <tr>
+        <td><a href="#" class="remove-row">Quitar</a></td>
+        <td><input name="dano-detalles-{i}-origen" type="radio" value="INF"></td>
+        <td><input name="dano-detalles-{i}-origen" type="radio" value="AE"></td>
+        <td><input name="dano-detalles-{i}-origen" type="radio" value="DA"></td>
+        <td><input name="dano-detalles-{i}-tipo" type="text"></td>
+        <td><input name="dano-detalles-{i}-unidad" type="text"></td>
+        <td><input name="dano-detalles-{i}-intensidad" type="radio" value="DL"></td>
+        <td><input name="dano-detalles-{i}-intensidad" type="radio" value="DM"></td>
+        <td><input name="dano-detalles-{i}-intensidad" type="radio" value="DS"></td>
+        <td><input name="dano-detalles-{i}-intensidad" type="radio" value="DT"></td>
+        <td><input name="dano-detalles-{i}-valor" type="text"></td>
+    </tr>
+</script>

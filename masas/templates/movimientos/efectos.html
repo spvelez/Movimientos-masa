@@ -1,0 +1,143 @@
+{{ form.efecto_secundario['id'] }}
+
+<div class="grid-x">
+    <div class="large-4 small-12">
+        <h6>Tipo (Costa & Schuster, 1998)</h6>
+        {% for item in form.efecto_secundario.tipo %}
+            {{ item }} {{ item.label }} <br>
+        {% endfor %}
+        
+        <br>
+        <h6>Morfometría de la presa</h6>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Longitud(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.longitud_presa) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Altura(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.altura) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Ancho(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.ancho) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Talud aguas arriba(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.talud_arriba) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Talud aguas abajo(m)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.talud_abajo) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Volumen presa(m<sup>3</sup>)</label>
+            </div>
+            <div class="large-3 cell">
+                {{ helpers.input(form.efecto_secundario.volumen_presa) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="large-3 large-offset-1">
+        <h6>Condición de la presa</h6>
+        {% for item in form.efecto_secundario.condicion_presa %}
+            {{ item }} {{ item.label }}<br>
+        {% endfor %}
+    </div>
+
+    <div class="large-4 small-12">
+        <h6>Morfometría del embalse</h6>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Longitud(m)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.longitud_embalse) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Área del embalse(m<sup>2</sup>)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.area_embalse) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Volúmen embalsado(m<sup>3</sup>)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.volumen_embalse) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Nivel de agua bajo corona(m)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.nivel_agua_corona) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Área cuenca(m<sup>2</sup>)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.area_cuenca) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Caudal entrada(m<sup>3</sup>/s)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.caudal_entrada) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Caudal salida(m<sup>3</sup>/s)</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.caudal_salida) }}
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-8 cell">
+                <label for="middle-label" class="middle">Tasa de llenado</label>
+            </div>
+            <div class="large-4 cell">
+                {{ helpers.input(form.efecto_secundario.tasa_llenado) }}
+            </div>
+        </div>
+
+        <br>
+        <h6>Otros</h6>
+        <label>{{ form.efecto_secundario.tsunami }} Tsunami</label>
+        <label>{{ form.efecto_secundario.empalizada }} Empalizada</label>
+        <label>{{ form.efecto_secundario.sedimentacion }} Sedimentación</label>
+        <label>{{ form.efecto_secundario.sismo }} Sismo</label>
+    </div>
+</div>

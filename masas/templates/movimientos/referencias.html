@@ -1,1 +1,54 @@
 <h4 class="text-center">Documentos de referencia</h4>
+
+<button type="button" 
+        class="add-row secondary button" 
+        data-target="#tb-ref" 
+        data-template="#ref-tmpl">Agregar</button>
+<div class="table-scroll">
+    <table id="tb-ref">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Autores</th>
+                <th>Año</th>
+                <th>Título</th>
+                <th>Revista/libro/informe</th>
+                <th>Editor/institución</th>
+                <th>Ciudad</th>
+                <th>Volumen: páginas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doc in form.documentos_ref %}
+                <tr>
+                    <td><a href="#" class="remove-row">Quitar</a></td>
+                    <td>
+                        {{ doc['id'] }}
+                        {{ doc.autores }}
+                    </td>
+                    <td>{{ doc.anio }}</td>
+                    <td>{{ doc.titulo }}</td>
+                    <td>{{ doc.libro }}</td>
+                    <td>{{ doc.editor }}</td>
+                    <td>{{ doc.ciudad }}</td>
+                    <td>{{ doc.paginas }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script type="text/html" id="ref-tmpl">
+    <tr>
+        <td><a href="#" class="remove-row">Quitar</a></td>
+        <td>
+            <input name="documentos_ref-{i}-autores" type="text">
+        </td>
+        <td><input name="documentos_ref-{i}-anio" type="text"></td>
+        <td><input name="documentos_ref-{i}-titulo" type="text"></td>
+        <td><input name="documentos_ref-{i}-libro" type="text"></td>
+        <td><input name="documentos_ref-{i}-editor" type="text"></td>
+        <td><input name="documentos_ref-{i}-ciudad" type="text"></td>
+        <td><input name="documentos_ref-{i}-paginas" type="text"></td>
+    </tr>
+</script>
