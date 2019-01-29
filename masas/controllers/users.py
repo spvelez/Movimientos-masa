@@ -22,6 +22,7 @@ def index():
 @authorize(UserRole.admin)
 def create():
     form = UserForm(request.form)
+    form.user_id = 0
 
     if request.method == 'POST' and form.validate():
         usr = User()
