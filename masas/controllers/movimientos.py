@@ -1,6 +1,7 @@
 from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
+from masas import authorize
 from masas.database import session
 from masas.enums import ESPACIAMIENTOS
 from masas.forms import MovimientoForm
@@ -13,12 +14,14 @@ bp = Blueprint('movimientos', __name__, template_folder='templates')
 
 
 @bp.route('/movimientos')
+@authorize()
 def index():
     lista = Movimiento.query.all()
     return render_template('movimientos/index.html', movimientos=lista)
 
 
 @bp.route('/movimientos/create', methods=['GET', 'POST'])
+@authorize()
 def create():
     form = MovimientoForm(request.form)
 
@@ -54,6 +57,7 @@ def create():
 
 
 @bp.route('/movimientos/edit/<int:id>', methods=['GET', 'POST'])
+@authorize()
 def edit(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
     formData = request.form if request.method == 'POST' else None
@@ -72,6 +76,7 @@ def edit(id):
 
 
 @bp.route('/movimientos/delete/<int:id>', methods=['POST'])
+@authorize()
 def delete(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
     session.delete(mov)
