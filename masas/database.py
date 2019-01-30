@@ -27,8 +27,3 @@ def init_db_command():
 
 def close_db(exception=None):
     session.remove()
-
-
-def init_app(app):
-    app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
