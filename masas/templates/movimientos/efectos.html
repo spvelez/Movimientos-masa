@@ -6,6 +6,7 @@
         {% for item in form.efecto_secundario.tipo %}
             {{ item }} {{ item.label }} <br>
         {% endfor %}
+        {{ helpers.input_errors(form.efecto_secundario.tipo) }}
         
         <br>
         <h6>Morfometría de la presa</h6>
@@ -64,6 +65,7 @@
         {% for item in form.efecto_secundario.condicion_presa %}
             {{ item }} {{ item.label }}<br>
         {% endfor %}
+        {{ helpers.input_errors(form.efecto_secundario.condicion_presa) }}
     </div>
 
     <div class="large-4 small-12">

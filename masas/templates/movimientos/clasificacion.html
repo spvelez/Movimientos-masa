@@ -115,6 +115,7 @@
                 {% endfor %}
             </div>
         </div>
+        {{ helpers.input_errors(form.clasificacion.humedad_uno) }}
 
         <br>
         <h6>Plasticidad</h6>
@@ -150,6 +151,7 @@
         {% for item in form.clasificacion.origen %}
             {{ item }} {{ item.label }}<br>
         {% endfor %}
+        {{ helpers.input_errors(form.clasificacion.origen) }}
 
         <br>
         <h6>Clasificación USCS</h6>
@@ -170,6 +172,7 @@
                 {% for item in form.clasificacion.velocidad %}
                     {{ item }} {{ item.label }}<br>
                 {% endfor %}
+                {{ helpers.input_errors(form.clasificacion.velocidad) }}
             </div>
             <div class="small-6">
                 Vmax. {{ form.clasificacion.vmax }}

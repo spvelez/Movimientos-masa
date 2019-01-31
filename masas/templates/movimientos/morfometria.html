@@ -178,11 +178,13 @@
         {% for item in form.morfometria.modo %}
             {{ item }} {{ item.label }} <br>
         {% endfor %}
+        {{ helpers.input_errors(form.morfometria.modo) }}
     </div>
     <div class="large-4 small-12">
         <h6>Severidad</h6>
         {% for item in form.morfometria.severidad %}
             {{ item }} {{ item.label }} <br>
         {% endfor %}
+        {{ helpers.input_errors(form.morfometria.severidad) }}
     </div>
 </div>

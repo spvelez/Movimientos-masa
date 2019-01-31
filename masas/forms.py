@@ -86,8 +86,11 @@ class DistribucionForm(Form):
 class ActividadForm(Form):
     id = IdField()
 
-    primera_fecha = DateTimeField(format='%Y-%m-%d')
-    ultima_fecha = DateTimeField(format='%Y-%m-%d')
+    primera_fecha = DateTimeField(format='%Y-%m-%d',
+                                  validators=[DataRequired()])
+
+    ultima_fecha = DateTimeField(format='%Y-%m-%d',
+                                 validators=[DataRequired()])
 
     edad = StringField(validators=[Length(max=4)])
     estado = RadioField(choices=ESTADOS_ACTIVIDAD,
@@ -124,8 +127,8 @@ class ClasificacionForm(Form):
     sistema = StringField(validators=[Length(max=128)])
     nombre = StringField(validators=[Length(max=128)])
 
-    tipo_uno = RadioField(choices=TIPOS_MOVIMIENTO)
-    tipo_dos = RadioField(choices=TIPOS_MOVIMIENTO)
+    tipo_uno = OptionalRadioField(choices=TIPOS_MOVIMIENTO)
+    tipo_dos = OptionalRadioField(choices=TIPOS_MOVIMIENTO)
 
     roca_uno = NullableIntegerField()
     roca_dos = NullableIntegerField()
@@ -147,11 +150,11 @@ class ClasificacionForm(Form):
     organica_uno = NullableIntegerField()
     organica_dos = NullableIntegerField()
 
-    humedad_uno = RadioField(choices=HUMEDADES)
-    humedad_dos = RadioField(choices=HUMEDADES)
+    humedad_uno = OptionalRadioField(choices=HUMEDADES)
+    humedad_dos = OptionalRadioField(choices=HUMEDADES)
 
-    plasticidad_uno = RadioField(choices=PLASTICIDADES)
-    plasticidad_dos = RadioField(choices=PLASTICIDADES)
+    plasticidad_uno = OptionalRadioField(choices=PLASTICIDADES)
+    plasticidad_dos = OptionalRadioField(choices=PLASTICIDADES)
 
     origen = RadioField(choices=ORIGENES_SUELO)
 
@@ -213,7 +216,7 @@ class CausaForm(Form):
     meteor_expansion = BooleanField()
     deforestacion = BooleanField()
 
-    mov_tectonico = RadioField(choices=CAUSAS_MOV)
+    mov_tectonico = OptionalRadioField(choices=CAUSAS_MOV)
     sismo = OptionalRadioField(choices=CAUSAS_MOV)
     magnitud_sismo = StringField(validators=[Length(max=32)])
     escala_sismo = StringField(validators=[Length(max=32)])
@@ -334,7 +337,7 @@ class DanoForm(Form):
 
 class MovimientoForm(Form):
     encuestador = StringField(validators=[DataRequired()])
-    fecha = DateTimeField(format='%Y-%m-%d')
+    fecha = DateTimeField(format='%Y-%m-%d', validators=[DataRequired()])
     institucion = StringField()
     codigo = StringField(validators=[DataRequired()])
 
