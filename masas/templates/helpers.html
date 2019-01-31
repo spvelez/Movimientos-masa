@@ -11,11 +11,9 @@
 
 {%- macro input_errors(control) %}
     {% if control.errors %}
-        <ul class="error-msg">
-            {% for error in control.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
+        {% for error in control.errors %}
+                <label class="error" for="{{ control.name }}">{{ error }}</label>
+        {% endfor %}        
     {% endif %}
 {% endmacro %}
 

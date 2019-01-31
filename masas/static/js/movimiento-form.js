@@ -27,4 +27,18 @@ $(function () {
         format: 'yyyy-mm-dd',
         language: 'es' 
     });
+
+    $('input[required]').addClass('required');
+
+    $('form').validate({
+        ignore: '',
+        invalidHandler: function (event, validator) {
+            var element = validator.errorList[0].element,
+                panel = $(element).parents('.tabs-panel');
+            
+            if (!panel.hasClass('is-active')) {
+                $('#form-tabs').foundation('selectTab', panel, true);
+            }
+        }
+    });
 });
