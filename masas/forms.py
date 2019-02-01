@@ -264,11 +264,11 @@ class UsoSueloForm(Form):
     id = IdField()
 
     ganaderia = NullableIntegerField()
-    protegida = NullableIntegerField()
+    area_protegida = NullableIntegerField()
     agricola = NullableIntegerField()
     recreacion = NullableIntegerField()
-    zona_arq = NullableIntegerField()
-    zona_indus = NullableIntegerField()
+    arqueologica = NullableIntegerField()
+    industrial = NullableIntegerField()
     vivienda = NullableIntegerField()
     vias = NullableIntegerField()
     mineria = NullableIntegerField()
@@ -323,7 +323,7 @@ class DetalleDanoForm(Form):
     tipo = StringField(validators=[DataRequired(), Length(max=128)])
     unidad = StringField(validators=[Length(max=128)])
     intensidad = RadioField(choices=INTENSIDADES_DANO)
-    valor = DecimalField(places=2)
+    valor = NullableDecimalField(places=2)
 
 
 class DanoForm(Form):
