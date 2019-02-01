@@ -36,8 +36,8 @@ class ChangePasswordForm(Form):
 class MapaForm(Form):
     id = IdField()
 
-    nro_mapa = StringField()
-    anio = StringField(validators=[Length(max=4)])
+    nro_mapa = StringField(validators=[DataRequired()])
+    anio = StringField(validators=[DataRequired(), Length(max=4)])
     escala = StringField()
     editor = StringField()
 
@@ -45,8 +45,8 @@ class MapaForm(Form):
 class FotoForm(Form):
     id = IdField()
 
-    nro_foto = StringField()
-    anio = StringField(validators=[Length(max=4)])
+    nro_foto = StringField(validators=[DataRequired()])
+    anio = StringField(validators=[DataRequired(), Length(max=4)])
     escala = StringField()
     editor = StringField()
 
@@ -54,10 +54,10 @@ class FotoForm(Form):
 class LocalizacionForm(Form):
     id = IdField()
 
-    pais = StringField()
-    provincia = StringField()
-    ciudad = StringField()
-    localidad = StringField()
+    pais = StringField(validators=[DataRequired()])
+    provincia = StringField(validators=[DataRequired()])
+    ciudad = StringField(validators=[DataRequired()])
+    localidad = StringField(validators=[DataRequired()])
 
     sitio = StringField()
     norte = NullableIntegerField()
@@ -107,7 +107,7 @@ class ActividadForm(Form):
 class DetalleLitologiaForm(Form):
     id = IdField()
 
-    estructura = StringField(validators=[Length(max=128)])
+    estructura = StringField(validators=[DataRequired(), Length(max=128)])
     dir_buzamiento = StringField(validators=[Length(max=64)])
     buzamiento = StringField(validators=[Length(max=64)])
     espaciamiento = RadioField(choices=[(i, '') for i in ESPACIAMIENTOS])
@@ -116,7 +116,7 @@ class DetalleLitologiaForm(Form):
 class LitologiaForm(Form):
     id = IdField()
 
-    descripcion = TextAreaField()
+    descripcion = TextAreaField(validators=[DataRequired()])
     detalles = CustomFieldList(FormField(DetalleLitologiaForm),
                                DetalleLitologia)
 
@@ -277,8 +277,8 @@ class DocumentoReferenciaForm(Form):
     id = IdField()
 
     autores = StringField(validators=[Length(max=256)])
-    anio = StringField(validators=[Length(max=4)])
-    titulo = StringField(validators=[Length(max=128)])
+    anio = StringField(validators=[DataRequired(), Length(max=4)])
+    titulo = StringField(validators=[DataRequired(), Length(max=128)])
     libro = StringField(validators=[Length(max=128)])
     editor = StringField(validators=[Length(max=128)])
     ciudad = StringField(validators=[Length(max=128)])
@@ -319,7 +319,7 @@ class DetalleDanoForm(Form):
     id = IdField()
 
     origen = RadioField(choices=ORIGENES_DANO)
-    tipo = StringField(validators=[Length(max=128)])
+    tipo = StringField(validators=[DataRequired(), Length(max=128)])
     unidad = StringField(validators=[Length(max=128)])
     intensidad = RadioField(choices=INTENSIDADES_DANO)
     valor = DecimalField(places=2)
@@ -328,9 +328,9 @@ class DetalleDanoForm(Form):
 class DanoForm(Form):
     id = IdField()
 
-    muertos = NullableIntegerField()
-    heridos = NullableIntegerField()
-    damnificados = NullableIntegerField()
+    muertos = IntegerField(validators=[DataRequired()])
+    heridos = IntegerField(validators=[DataRequired()])
+    damnificados = IntegerField(validators=[DataRequired()])
 
     detalles = CustomFieldList(FormField(DetalleDanoForm), DetalleDano)
 

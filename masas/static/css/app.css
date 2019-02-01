@@ -29,9 +29,9 @@
     margin: 0;
 }
 
-ul.error-msg {
-    list-style-type: none;
-    margin-left: 0;
+label.error {
+    color: #c60f13;
+    margin: 0 0 1rem;
 }
 
 th.text-center {
