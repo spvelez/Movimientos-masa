@@ -22,7 +22,9 @@
       <ul class="menu vertical medium-horizontal">
         <li class="menu-text hide-for-small-only brand">Movimientos</li>
         {% if session['user_id'] %}
-          <li><a href="{{ url_for('users.index') }}">Usuarios</a></li>
+          {% if session['user_role'] == 'admin' %}
+            <li><a href="{{ url_for('users.index') }}">Usuarios</a></li>
+          {% endif %}
           <li><a href="{{ url_for('movimientos.index') }}">Formularios</a></li>
         {% endif %}
       </ul>

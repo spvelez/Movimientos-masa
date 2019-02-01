@@ -51,7 +51,7 @@ def authorize(role=None):
         def wrapped_view(*args, **kwargs):
             if not session.get('user_id'):
                 return redirect(url_for('account.login'))
-            elif role and session.get('user_role') != role.value[0]:
+            elif role and session.get('user_role') != role.name:
                 flash('No tienes permiso para esta sección')
                 return redirect(url_for('account.login'))
             return view(*args, **kwargs)

@@ -3,6 +3,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from masas import authorize
+from masas.enums import UserRole
 from masas.forms import ChangePasswordForm
 from masas.models.user import User
 from masas.database import session as db_session
@@ -24,7 +25,7 @@ def login():
             session.clear()
             session['user_id'] = user.id
             session['user_login'] = user.login
-            session['user_role'] = user.role
+            session['user_role'] = UserRole.from_value(user.role).name
             return redirect(url_for('index'))
 
     return render_template('login.html')

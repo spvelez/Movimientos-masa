@@ -3,7 +3,7 @@ from flask import (
 )
 from masas import authorize
 from masas.database import session
-from masas.enums import ESPACIAMIENTOS
+from masas.enums import ESPACIAMIENTOS, UserRole
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
     Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia,
@@ -21,7 +21,7 @@ def index():
 
 
 @bp.route('/movimientos/create', methods=['GET', 'POST'])
-@authorize()
+@authorize(UserRole.user)
 def create():
     form = MovimientoForm(request.form)
 
@@ -57,7 +57,7 @@ def create():
 
 
 @bp.route('/movimientos/edit/<int:id>', methods=['GET', 'POST'])
-@authorize()
+@authorize(UserRole.user)
 def edit(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
     formData = request.form if request.method == 'POST' else None
@@ -76,7 +76,7 @@ def edit(id):
 
 
 @bp.route('/movimientos/delete/<int:id>', methods=['POST'])
-@authorize()
+@authorize(UserRole.user)
 def delete(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
     session.delete(mov)
