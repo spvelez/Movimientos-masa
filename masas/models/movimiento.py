@@ -15,6 +15,10 @@ class Movimiento(DbModel):
     institucion = Column(String(128))
     codigo = Column(String(128))
 
+    usuario_id = Column(Integer, ForeignKey('usuarios.id'))
+
+    usuario = relationship('User')
+
     localizacion = relationship('Localizacion', uselist=False)
     actividad = relationship('Actividad', uselist=False)
     litologia = relationship('Litologia', uselist=False)
@@ -331,7 +335,7 @@ class EfectoSecundario(DbModel):
 
     id = Column(Integer, primary_key=True)
 
-    tipo = Column(String(2))
+    tipo = Column(String(3))
     longitud_presa = Column(Float())
     altura = Column(Float())
     ancho = Column(Float())

@@ -3,7 +3,8 @@ from wtforms import (
     DecimalField, HiddenField, IntegerField, SelectField, StringField,
     PasswordField, RadioField, TextAreaField
 )
-from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
+from wtforms.validators import (
+    DataRequired, EqualTo, InputRequired, Length, ValidationError)
 from .enums import *
 from .formfields import *
 from .models.movimiento import (
@@ -328,9 +329,9 @@ class DetalleDanoForm(Form):
 class DanoForm(Form):
     id = IdField()
 
-    muertos = IntegerField(validators=[DataRequired()])
-    heridos = IntegerField(validators=[DataRequired()])
-    damnificados = IntegerField(validators=[DataRequired()])
+    muertos = IntegerField(validators=[InputRequired()])
+    heridos = IntegerField(validators=[InputRequired()])
+    damnificados = IntegerField(validators=[InputRequired()])
 
     detalles = CustomFieldList(FormField(DetalleDanoForm), DetalleDano)
 

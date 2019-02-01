@@ -17,6 +17,7 @@
                     <th>Fecha</th>
                     <th>Institución</th>
                     <th>Código</th>
+                    <th>Usuario registra</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td>{{ mov.fecha }}</td>
                         <td>{{ mov.institucion }}</td>
                         <td>{{ mov.codigo }}</td>
+                        <td>{{ mov.usuario.name }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

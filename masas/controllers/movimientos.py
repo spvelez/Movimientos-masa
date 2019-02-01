@@ -46,6 +46,8 @@ def create():
 
         form.populate_obj(mov)
 
+        mov.usuario_id = session['user_id']
+
         db_session.add(mov)
         db_session.commit()
 
