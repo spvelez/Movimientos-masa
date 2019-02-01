@@ -4,7 +4,7 @@ from flask import (
 from werkzeug.exceptions import NotFound
 from masas.enums import UserRole
 from masas.models.user import User
-from masas.database import session
+from masas.database import db_session
 
 bp = Blueprint('api', __name__)
 

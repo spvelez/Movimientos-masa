@@ -6,7 +6,7 @@ from masas import authorize
 from masas.enums import UserRole
 from masas.forms import ChangePasswordForm
 from masas.models.user import User
-from masas.database import session as db_session
+from masas.database import db_session
 
 bp = Blueprint('account', __name__, template_folder='templates')
 

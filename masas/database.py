@@ -7,13 +7,13 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine(current_app.config['DB_CONNECTION'], echo=True)
-session = scoped_session(sessionmaker(
+db_session = scoped_session(sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine))
 
 DbModel = declarative_base()
-DbModel.query = session.query_property()
+DbModel.query = db_session.query_property()
 
 
 @click.command('init-db')
@@ -26,4 +26,4 @@ def init_db_command():
 
 
 def close_db(exception=None):
-    session.remove()
+    db_session.remove()

@@ -2,7 +2,7 @@ from flask import (
      Blueprint, flash, render_template, redirect, request, session, url_for
 )
 from masas import authorize
-from masas.database import session
+from masas.database import db_session
 from masas.enums import ESPACIAMIENTOS, UserRole
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
@@ -46,8 +46,8 @@ def create():
 
         form.populate_obj(mov)
 
-        session.add(mov)
-        session.commit()
+        db_session.add(mov)
+        db_session.commit()
 
         return redirect(url_for('.index'))
 
@@ -67,7 +67,7 @@ def edit(id):
         print('embalse: ', form.causa.embalse.data)
         form.populate_obj(mov)
 
-        session.commit()
+        db_session.commit()
         return redirect(url_for('.index'))
 
     return render_template('/movimientos/form.html',
@@ -79,7 +79,7 @@ def edit(id):
 @authorize(UserRole.user)
 def delete(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
-    session.delete(mov)
-    session.commit()
+    db_session.delete(mov)
+    db_session.commit()
 
     return redirect(url_for('.index'))
