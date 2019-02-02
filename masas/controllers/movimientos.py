@@ -85,3 +85,15 @@ def delete(id):
     db_session.commit()
 
     return redirect(url_for('.index'))
+
+
+@bp.route('/movimientos/view/<int:id>')
+@authorize(UserRole.user)
+def view(id):
+    movimiento = Movimiento.query.filter(Movimiento.id == id).first()
+
+    import masas.enums
+
+    return render_template('/movimientos/view.html',
+                           mov=movimiento,
+                           enums=masas.enums)

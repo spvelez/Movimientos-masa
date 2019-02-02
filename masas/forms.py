@@ -289,8 +289,7 @@ class DocumentoReferenciaForm(Form):
 class EfectoForm(Form):
     id = IdField()
 
-    tipo = RadioField(choices=[(x, x) for x in ['I', 'II', 'III',
-                                                'IV', 'V', 'VI']])
+    tipo = RadioField(choices=[(x, x) for x in TIPOS_EFECTO])
 
     longitud_presa = NullableDecimalField(places=2)
     altura = NullableDecimalField(places=2)

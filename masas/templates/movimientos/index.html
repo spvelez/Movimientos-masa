@@ -26,8 +26,9 @@
                         <td>
                             {% if not is_admin %}
                                 <a href="{{ url_for('.edit', id=mov.id)}}">Editar</a> |
-                                <a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a>
+                                <a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a> |
                             {% endif %}
+                            <a href="{{ url_for('.view', id=mov.id) }}">Ver</a>
                         </td>
                         <td>{{ mov.id }}</td>
                         <td>{{ mov.encuestador }}</td>

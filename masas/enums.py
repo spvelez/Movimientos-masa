@@ -85,14 +85,16 @@ MODOS_MORFM = [
 
 SEVERIDADES_MORFM = [
     ('L', 'Leve'),
-    ('L', 'Media'),
-    ('L', 'Severa'),
+    ('M', 'Media'),
+    ('S', 'Severa'),
 ]
 
 CAUSAS_MOV = [
     ('C', 'Causante'),
     ('D', 'Detonante')
 ]
+
+TIPOS_EFECTO = ['I', 'II', 'III', 'IV', 'V', 'VI']
 
 CONDICIONES_PRESA = [
     ('CORREB', 'Corona rebosada'),

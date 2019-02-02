@@ -1,0 +1,1087 @@
+{%extends '/layoutempty.html'%}
+
+{%- macro check_list(list, value) %}
+    {% for item in list %}
+        <span class="check {{ 'selected' if value == item[0] else '' }}"></span>
+        {{ item[1] }}<br>
+    {% endfor %}
+{% endmacro %}
+
+{%- macro check(option_val, selected_val) %}
+    <span class="check {{ 'selected' if option_val == selected_val else '' }}"></span>
+{% endmacro %}
+
+{% block styles %}
+    <style>
+        html { font-size: 12px; }
+        .group-title { 
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        .subgroup-title {
+            margin-bottom: 0;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+        div.group {
+            border: 1px solid #ddd;
+            border-right: none;
+            margin-top: 5px;
+        }
+        div.subgroup {
+            border-right: 1px solid #ddd;
+        }
+
+        .check {
+            display:inline-block; 
+            width:10px; 
+            height:10px;
+            border:1px solid #000;
+        }
+
+        .check.selected {
+            border-width: 5px;
+        }
+
+        table.unbordered {
+            border-collapse: unset;
+        }
+
+        table.unbordered td {
+            padding: 0;
+        }
+
+        @media print {
+            html {
+                font-size: 9px;
+            }
+
+            div.group {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+{% endblock %}
+{% block title %}Ver movimiento{% endblock %}
+{% block body %}
+    <h5 class="text-center"><strong>Formato para inventario de movimientos en masa</strong></h3>
+    <strong class="margin-right-1">Nombre del encuestador</strong> {{ mov.encuestador }}
+    <strong class="margin-horizontal-1">Fecha</strong> {{ mov.fecha.strftime('%Y-%m-%d') }}
+    <strong class="margin-horizontal-1">Institución</strong> {{ mov.institucion }}
+    <strong class="margin-horizontal-1">Código del evento</strong> {{ mov.codigo }}
+    
+    <div class="grid-x group">
+        <h5 class="large-12 group-title">Localización geográfica y documental del evento</h5>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Por división política</h6>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        <td>País</td>
+                        <td>{{ mov.localizacion.pais }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dpto./Prov./Edo.</td>
+                        <td>{{ mov.localizacion.provincia }}</td>
+                    </tr>
+                    <tr>
+                        <td>Municipio/Ciudad</td>
+                        <td>{{ mov.localizacion.ciudad }}</td>
+                    </tr>
+                    <tr>
+                        <td>Localidad</td>
+                        <td>{{ mov.localizacion.localidad }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Coordenadas</h6>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        <td>Sitio</td>
+                        <td>{{ mov.localizacion.sitio }}</td>
+                    </tr>
+                    <tr>
+                        <td>Norte/Lat.</td>
+                        <td>{{ mov.localizacion.norte }}</td>
+                    </tr>
+                    <tr>
+                        <td>Este/Long.</td>
+                        <td>{{ mov.localizacion.este }}</td>
+                    </tr>
+                    <tr>
+                        <td>Proyección</td>
+                        <td>{{ mov.localizacion.proyeccion }}</td>
+                    </tr>
+                    <tr>
+                        <td>Altura(m.s.n.m.)</td>
+                        <td>{{ mov.localizacion.altura }}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Referentes geográficos</h6>
+            {{ mov.localizacion.ref_geograficos }}
+        </div>
+        <div class="large-6 subgroup">
+            <h6 class="subgroup-title">Documentación</h6>
+            <div class="grid-x">
+                <div class="large-6 subgroup">
+                    <table class="unstriped unbordered">
+                        <tbody>
+                            <tr>
+                                <td>Mapa/Plancha No.</td>
+                                <td>Año</td>
+                                <td>Escala</td>
+                                <td>Editor</td>
+                            </tr>
+                            {% for mapa in mov.localizacion.mapas %}
+                                <tr>
+                                    <td>{{ mapa.nro_mapa }}</td>
+                                    <td>{{ mapa.anio }}</td>
+                                    <td>{{ mapa.escala }}</td>
+                                    <td>{{ mapa.editor }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="large-6">
+                    <table class="unstriped unbordered">
+                        <tbody>
+                            <tr>
+                                <td>Fotografía No.</td>
+                                <td>Año</td>
+                                <td>Escala</td>
+                                <td>Editor</td>
+                            </tr>
+                            {% for foto in mov.localizacion.fotos %}
+                                <tr>
+                                    <td>{{ foto.nro_foto }}</td>
+                                    <td>{{ foto.anio }}</td>
+                                    <td>{{ foto.escala }}</td>
+                                    <td>{{ foto.editor }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-x group">
+        <div class="large-5">
+            <h5 class="group-title">Actividad del movimiento</h5>
+            <div class="grid-x">
+                <div class="large-6 subgroup">
+                    <h6 class="subgroup-title">Fechas de ocurrencia</h6>
+                    <span class="margin-right-1">Primer movimiento</span> {{ mov.actividad.primera_fecha.strftime('%Y-%m-%d') }} <br>
+                    <span class="margin-right-1">Último movimiento</span> {{ mov.actividad.ultima_fecha.strftime('%Y-%m-%d') }} <br>
+                    <span class="margin-right-1">Edad</span> {{ mov.actividad.edad }} <br>
+                </div>
+                <div class="large-2 subgroup">
+                    <h6 class="subgroup-title">Estado</h6>
+                    {{ check_list(enums.ESTADOS_ACTIVIDAD, mov.actividad.estado) }}
+                </div>
+                <div class="large-2 subgroup">
+                    <h6 class="subgroup-title">Estilo</h6>
+                    {{ check_list(enums.ESTILOS_ACTIVIDAD, mov.actividad.estilo) }}
+                </div>
+                <div class="large-2 subgroup">
+                    <h6 class="subgroup-title">Distribución</h6>
+                    {{ check(True, mov.actividad.distribucion.retrogresivo) }} Retrogresivo <br>
+                    {{ check(True, mov.actividad.distribucion.avanzado) }} Avanzado <br>
+                    {{ check(True, mov.actividad.distribucion.ensanchado) }} Ensanchado <br>
+                    {{ check(True, mov.actividad.distribucion.confinado) }} Confinado <br>
+                    {{ check(True, mov.actividad.distribucion.Creciente) }} Creciente <br>
+                    {{ check(True, mov.actividad.distribucion.decreciente) }} Decreciente <br>
+                    {{ check(True, mov.actividad.distribucion.movil) }} Móvil <br>
+                </div>
+            </div>
+        </div>
+        <div class="large-7 subgroup">
+            <h5 class="group-title">Litología y estratigrafía</h5>
+            <div class="grid-x">
+                <div class="large-3 subgroup">
+                    <h6 class="subgroup-title">Descripción</h6>
+                </div>
+                <div class="large-2">
+                    <h6 class="subgroup-title">Estructura</h6>
+                </div>
+                <div class="large-2">
+                    <h6 class="subgroup-title">Orientación</h6>
+                </div>
+                <div class="large-5">
+                    <h6 class="subgroup-title">Espaciamiento</h6>
+                </div>
+
+                <div class="large-3">
+                    {{ mov.litologia.descripcion }}
+                </div>
+                <div class="large-2">
+                    <table class="stack unstriped">
+                        <tr><td>&nbsp;</td></tr>
+                        {% for item in mov.litologia.detalles %}
+                            <tr><td>{{ item.estructura }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="large-2">
+                    <table class="stack unstriped">
+                        <tr><td>DB</td><td>BZ</td></tr>
+                        {% for item in mov.litologia.detalles %}
+                            <tr>
+                                <td>{{ item.dir_buzamiento }}</td>
+                                <td>{{ item.buzamiento }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="large-5">
+                    <table class="stack unstriped">
+                        <tr>
+                            {% for option in enums.ESPACIAMIENTOS %}
+                                <td class="text-center">{{ option }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% for item in mov.litologia.detalles %}
+                            <tr>
+                                {% for option in enums.ESPACIAMIENTOS %}
+                                    <td class="text-center">
+                                        <span class="check {{ 'selected' if item.espaciamiento == option else '' }} "></span>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid-x group">
+        <h5 class="large-12 group-title">Clasificación del movimiento</h5>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Tipo de movimiento</h6>
+
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr><td>1</td><td>2</td><td></td></tr>
+                    {% for option in enums.TIPOS_MOVIMIENTO %}
+                        <tr>
+                            <td>{{ check(option[0], mov.clasificacion.tipo_uno) }}</td>
+                            <td>{{ check(option[0], mov.clasificacion.tipo_dos) }}</td>
+                            <td>{{ option[1] }}</td>
+                        </tr>                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="large-5 grid-x subgroup">
+            <h6 class="large-12 subgroup-title">Material</h6>
+            <div class="large-5 subgroup">
+                <table class="unbordered unstriped">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td class="text-right">%1</td>
+                            <td class="text-right">%2</td>
+                        </tr>
+                        <tr>
+                            <td>Roca</td>
+                            <td class="text-right">{{ mov.clasificacion.roca_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.roca_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Detritos</td>
+                            <td class="text-right">{{ mov.clasificacion.detritos_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.detritos_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tierra</td>
+                            <td class="text-right">{{ mov.clasificacion.tierra_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.tierra_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><h6 class="margin-vertical-1">Suelos ingeniería</h6></td>
+                        </tr>
+                        <tr>
+                            <td>Bloques</td>
+                            <td class="text-right">{{ mov.clasificacion.bloques_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.bloques_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cantos</td>
+                            <td class="text-right">{{ mov.clasificacion.cantos_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.cantos_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Grava</td>
+                            <td class="text-right">{{ mov.clasificacion.grava_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.grava_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Arena</td>
+                            <td class="text-right">{{ mov.clasificacion.arena_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.arena_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Finos</td>
+                            <td class="text-right">{{ mov.clasificacion.finos_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.finos_dos }}</td>
+                        </tr>
+                        <tr>
+                            <td>M.O.</td>
+                            <td class="text-right">{{ mov.clasificacion.organica_uno }}</td>
+                            <td class="text-right">{{ mov.clasificacion.organica_dos }}</td>
+                        </tr>
+                    </tbody>
+                </table>              
+               
+                <br>
+                <small>M.O.: Materia orgánica. turba</small>
+            </div>
+            <div class="large-7 grid-x">
+                <div class="large-6 subgroup">
+                    <h6 class="subgroup-title">Humedad del suelo</h6>
+                    <table class="unbordered unstriped">
+                        <tbody>
+                            <tr>
+                                <td>1</td><td>2</td><td></td>
+                            </tr>
+                            {% for option in enums.HUMEDADES %}
+                                <tr>
+                                    <td>{{ check(option[0], mov.clasificacion.humedad_uno) }}</td>
+                                    <td>{{ check(option[0], mov.clasificacion.humedad_dos) }}</td>
+                                    <td>{{ option[1] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="large-6">
+                    <h6 class="subgroup-title">Origen del suelo</h6>
+                    {% for option in enums.ORIGENES_SUELO %}
+                        {{ check(option[0], mov.clasificacion.origen) }} {{ option[1] }} <br>
+                    {% endfor %}
+                </div>
+
+                <div class="large-6 subgroup">
+                    <h6 class="subgroup-title">Plasticidad</h6>
+                    <table class="unbordered unstriped">
+                        <tbody>
+                            <tr>
+                                <td>1</td><td>2</td><td></td>
+                            </tr>
+                            {% for option in enums.PLASTICIDADES %}
+                                <tr>
+                                    <td>{{ check(option[0], mov.clasificacion.plasticidad_uno) }}</td>
+                                    <td>{{ check(option[0], mov.clasificacion.plasticidad_dos) }}</td>
+                                    <td>{{ option[1] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="large-6">
+                    <h6 class="subgroup-title">Clasificación USCS</h6>
+                    {{ mov.clasificacion.uscs }}
+                </div>
+            </div>
+        </div>
+
+        <div class="large-5 grid-x">
+            <div class="large-4 subgroup">
+                <h6 class="subgroup-title">Otras características</h6>
+                {{ check(True, mov.clasificacion.canalizado) }} Movimiento canalizado <br>
+                {{ check(True, mov.clasificacion.no_canalizado) }} Movimiento no canalizado <br>
+                {{ check(True, mov.clasificacion.licuacion) }} Licuación <br>
+                {{ check(True, mov.clasificacion.otra_caracteristica != None) }}Otra describir <br>{{ mov.clasificacion.otra_caracteristica }}
+            </div>
+            <div class="large-8 subgroup">
+                <h6 class="subgroup-title">Velocidad</h6>
+                <div class="grid-x">
+                    <table class="unstriped unbordered large-8">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>Descripción</td>
+                                <td></td>
+                            </tr>
+                            {% for option in enums.VELOCIDADES %}
+                                <tr>
+                                    <td>{{ check(option[0], mov.clasificacion.velocidad) }}</td>
+                                    <td>{{ option[1] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="large-4">
+                        Vmax. {{ mov.clasificacion.vmax }}<br>
+                        Vmedia. {{ mov.clasificacion.vmedia }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-x group">
+        <h5 class="large-12 group-title">Morfometría</h5>
+        <div class="large-3 subgroup">
+            <h6 class=" subgroup-title">General</h6>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        <td>Diferencia de altura corona a punta (m)</td>
+                        <td>{{ mov.morfometria.dif_corona_punta }}</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud horizontal corona a punta (m)</td>
+                        <td>{{ mov.morfometria.long_corona_punta }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fahrböschung</td>
+                        <td>{{ mov.morfometria.fahrboschung }}</td>
+                    </tr>
+                    <tr>
+                        <td>Pendiente de ladera en post-falla</td>
+                        <td>{{ mov.morfometria.post_falla }}</td>
+                    </tr>
+                    <tr>
+                        <td>Pendiente de ladera en pre-falla</td>
+                        <td>{{ mov.morfometria.pre_falla }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dirección del movimiento</td>
+                        <td>{{ mov.morfometria.direccion }}</td>
+                    </tr>
+                    <tr>
+                        <td>Azimut del talud</td>
+                        <td>{{ mov.morfometria.azimut }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="large-5 grid-x subgroup">
+            <h6 class="subgroup-title large-12">Dimensiones</h6>
+            <table class="large-6 unbordered unstriped">
+                <tbody>
+                    <tr>
+                        <td>Profundida de la superficie de falla Dr(m)</td>
+                        <td>{{ mov.morfometria.profundidad_falla }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ancho de la superficie de falla Wr(m)</td>
+                        <td>{{ mov.morfometria.ancho_falla }}</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud de la superficie de falla Lr(m)</td>
+                        <td>{{ mov.morfometria.longitud_falla }}</td>
+                    </tr>
+                    <tr>
+                        <td>Espesor de la masa desplazada Dd(m)</td>
+                        <td>{{ mov.morfometria.espesor_masa }}</td>
+                    </tr>
+                    <tr>
+                        <td>Ancho de la masa desplazada Wd(m)</td>
+                        <td>{{ mov.morfometria.ancho_masa }}</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud de la masa desplazada Ld(m)</td>
+                        <td>{{ mov.morfometria.longitud_masa }}</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud total L(m)</td>
+                        <td>{{ mov.morfometria.longitud_total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="large-6 unbordered unstriped">
+                <tbody>
+                    <tr>
+                        <td>Volumen inicial(m<sup>3</sup>)</td>
+                        <td>{{ mov.morfometria.volumen_inicial }}</td>
+                    </tr>
+                    <tr>
+                        <td>Volumen desplazado(m<sup>3</sup>)</td>
+                        <td>{{ mov.morfometria.volumen_desplazado }}</td>
+                    </tr>
+                    <tr>
+                        <td>Área inicial(km<sup>2</sup>)</td>
+                        <td>{{ mov.morfometria.area_inicial }}</td>
+                    </tr>
+                    <tr>
+                        <td>Área total afectada(km<sup>2</sup>)</td>
+                        <td>{{ mov.morfometria.area_total }}</td>
+                    </tr>
+                    <tr>
+                        <td>Distancia de viaje(km)</td>
+                        <td>{{ mov.morfometria.distancia_viaje }}</td>
+                    </tr>
+                    <tr>
+                        <td>Runup(m)</td>
+                        <td>{{ mov.morfometria.runup }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title large-12">Deformación del terreno</h6>
+            <div class="grid-x">
+                <table class="large-6 unbordered unstriped">
+                    <tbody>
+                        <tr>
+                            <td></td><td>Modo</td>
+                        </tr>
+                        {% for option in enums.MODOS_MORFM %}
+                            <tr>
+                                <td>{{ check(option[0], mov.morfometria.modo) }}</td>
+                                <td>{{ option[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <table class="large-6 unbordered unstriped">
+                    <tbody>
+                        <tr>
+                            <td></td><td>Severidad</td>
+                        </tr>
+                        {% for option in enums.SEVERIDADES_MORFM %}
+                            <tr>
+                                <td>{{ check(option[0], mov.morfometria.severidad) }}</td>
+                                <td>{{ option[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Geoforma</h6>
+        </div>
+    </div>
+
+    <div class="group grid-x">
+        <div class="large-7">
+            <h5 class="group-title">Causas del movimiento</h5>
+            <div class="grid-x subgroup">
+                <table class="large-4 unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>C</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_debil) }}</td>
+                            <td>Material plástico débil</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_sensitivo) }}</td>
+                            <td>Material sensitivo</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_colapsible) }}</td>
+                            <td>Material colapsible</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_meteor_fisica) }}</td>
+                            <td>Material meteorizado físicamente</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_meteor_quimica) }}</td>
+                            <td>Material meteorizado químicamente</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_corte) }}</td>
+                            <td>Material fallado por corte</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.material_fisurado) }}</td>
+                            <td>Material fisurado o agrietado</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.orient_desfavorable) }}</td>
+                            <td>Orientación desfavorable</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.contraste_perm) }}</td>
+                            <td>Contraste de permeabilidad</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.constraste_rigidez) }}</td>
+                            <td>Contraste de rigidez de materiales</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.meteor_congelamiento) }}</td>
+                            <td>Meteorización por congelamiento / deshielo</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.meteor_expansion) }}</td>
+                            <td>Meteorización por expansión / contracción</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check(True, mov.causa.deforestacion) }}</td>
+                            <td>Deforestación o ausencia de vegetación</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="large-4 unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>C</td>
+                            <td>D</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.mov_tectonico) }}</td>
+                            <td>{{ check('D', mov.causa.mov_tectonico) }}</td>
+                            <td>Movimiento tectónico</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.sismo) }}</td>
+                            <td>{{ check('D', mov.causa.sismo) }}</td>
+                            <td>Sismo</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.erupcion) }}</td>
+                            <td>{{ check('D', mov.causa.erupcion) }}</td>
+                            <td>Erupción volcánica</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.lluvias) }}</td>
+                            <td>{{ check('D', mov.causa.lluvias) }}</td>
+                            <td>Lluvias</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.viento) }}</td>
+                            <td>{{ check('D', mov.causa.viento) }}</td>
+                            <td>Viento</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.deshielo) }}</td>
+                            <td>{{ check('D', mov.causa.deshielo) }}</td>
+                            <td>Deshielo</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.glaciares) }}</td>
+                            <td>{{ check('D', mov.causa.glaciares) }}</td>
+                            <td>Acance/retroceso glaciares</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.romp_lagos) }}</td>
+                            <td>{{ check('D', mov.causa.romp_lagos) }}</td>
+                            <td>Rompimiento de lagos en cráteres</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.romp_presas) }}</td>
+                            <td>{{ check('D', mov.causa.romp_presas) }}</td>
+                            <td>Rompimiento de presas</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.desembalse) }}</td>
+                            <td>{{ check('D', mov.causa.desembalse) }}</td>
+                            <td>Desembalse rápido de represas</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.embalse) }}</td>
+                            <td>{{ check('D', mov.causa.embalse) }}</td>
+                            <td>Embalse</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.erosion_glaciares) }}</td>
+                            <td>{{ check('D', mov.causa.erosion_glaciares) }}</td>
+                            <td>Erosión del pie del talud por glaciares</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.erosion_superficial) }}</td>
+                            <td>{{ check('D', mov.causa.erosion_superficial) }}</td>
+                            <td>Erosión superficial</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="large-4 unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>C</td>
+                            <td>D</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.soc_corriente_agua) }}</td>
+                            <td>{{ check('D', mov.causa.soc_corriente_agua) }}</td>
+                            <td>Socavación del pie del talud por corriente de agua</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.soc_oleaje) }}</td>
+                            <td>{{ check('D', mov.causa.soc_oleaje) }}</td>
+                            <td>Socavación del pie del talud por oleaje</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.excavacion_talud) }}</td>
+                            <td>{{ check('D', mov.causa.excavacion_talud) }}</td>
+                            <td>Excavación del pie del talud</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.carga_corona) }}</td>
+                            <td>{{ check('D', mov.causa.carga_corona) }}</td>
+                            <td>Carga en la corona del talud</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.erosion_subterranea) }}</td>
+                            <td>{{ check('D', mov.causa.erosion_subterranea) }}</td>
+                            <td>Erosión subterránea</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.irrigacion) }}</td>
+                            <td>{{ check('D', mov.causa.irrigacion) }}</td>
+                            <td>Irrigación</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.mant_sistema_drenaje) }}</td>
+                            <td>{{ check('D', mov.causa.mant_sistema_drenaje) }}</td>
+                            <td>Mantenimiento deficiente sistema de drenaje</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.escapes_tuberias) }}</td>
+                            <td>{{ check('D', mov.causa.escapes_tuberias) }}</td>
+                            <td>Escapes de agua de tuberias</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.mineria) }}</td>
+                            <td>{{ check('D', mov.causa.mineria) }}</td>
+                            <td>Minería</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.disp_esteriles_escombros) }}</td>
+                            <td>{{ check('D', mov.causa.disp_esteriles_escombros) }}</td>
+                            <td>Disposición deficiente de estériles/escombros</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.vibracion_artificial) }}</td>
+                            <td>{{ check('D', mov.causa.vibracion_artificial) }}</td>
+                            <td>Vibración artificial</td>
+                        </tr>
+                        <tr>
+                            <td>{{ check('C', mov.causa.otros) }}</td>
+                            <td>{{ check('D', mov.causa.otros) }}</td>
+                            <td>Otros</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="large-5 subgroup">
+            <h5 class="group-title">Cobertura y uso del suelo</h5>
+            <div class="grid-x">
+                <table class="large-6 unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>Tipo uso</td>
+                            <td class="text-right">%</td>
+                        </tr>
+                        <tr>
+                            <td>Veg. herbácea</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.herbacea }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bosque/Selva</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.bosque_selva }}</td>
+                        </tr>
+                        <tr>
+                            <td>Matorrales</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.matorrales }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cuerpo agua</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.cuerpo_agua }}</td>
+                        </tr>
+                        <tr>
+                            <td>Cultivos</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.cultivos }}</td>
+                        </tr>
+                        <tr>
+                            <td>Construcciones</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.construcciones }}</td>
+                        </tr>
+                        <tr>
+                            <td>Sin cobertura</td>
+                            <td class="text-right">{{ mov.cobertura_suelo.sin_cobertura }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="large-6 unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>Tipo uso</td>
+                            <td class="text-right">%</td>
+                        </tr>
+                        <tr>
+                            <td>Ganadería</td>
+                            <td class="text-right">{{ mov.uso_suelo.ganaderia }}</td>
+                        </tr>
+                        <tr>
+                            <td>Área protegida</td>
+                            <td class="text-right">{{ mov.uso_suelo.area_protegida }}</td>
+                        </tr>
+                        <tr>
+                            <td>Agrícola</td>
+                            <td class="text-right">{{ mov.uso_suelo.agricola }}</td>
+                        </tr>
+                        <tr>
+                            <td>Recreación</td>
+                            <td class="text-right">{{ mov.uso_suelo.recreacion }}</td>
+                        </tr>
+                        <tr>
+                            <td>Zona arqueológica</td>
+                            <td class="text-right">{{ mov.uso_suelo.arqueologica }}</td>
+                        </tr>
+                        <tr>
+                            <td>Zona industrial</td>
+                            <td class="text-right">{{ mov.uso_suelo.industrial }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vivienda</td>
+                            <td class="text-right">{{ mov.uso_suelo.vivienda }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vias</td>
+                            <td class="text-right">{{ mov.uso_suelo.vias }}</td>
+                        </tr>
+                        <tr>
+                            <td>Minería</td>
+                            <td class="text-right">{{ mov.uso_suelo.mineria }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="group subgroup">
+        <h5 class="group-title">Documentos de referencia</h5>
+        <table class="unstriped">
+            <tbody>
+                <tr>
+                    <th class="text-left">Autores</th>
+                    <th class="text-left" width="50">Año</th>
+                    <th class="text-left">Título</th>
+                    <th class="text-left">Revista/Libro/Informe</th>
+                    <th class="text-left">Editor/Institución</th>
+                    <th class="text-left">Ciudad</th>
+                    <th class="text-left" width="150">Volumen: páginas</th>
+                </tr>
+                {% for doc in mov.documentos_ref %}
+                    <tr>
+                        <td>{{ doc.autores }}</td>
+                        <td>{{ doc.anio }}</td>
+                        <td>{{ doc.titulo }}</td>
+                        <td>{{ doc.libro }}</td>
+                        <td>{{ doc.editor }}</td>
+                        <td>{{ doc.ciudad }}</td>
+                        <td>{{ doc.paginas }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="group grid-x">
+        <h5 class="large-12 group-title">Efectos secundarios</h5>
+        <div class="large-10 grid-x subgroup">
+            <h6 class="subgroup-title large-12">Represamiento</h6>
+            <div class="large-2 subgroup">
+                <h6 class="subgroup-title">Tipo (Costa & Schuster)</h6>
+                <table class="unstriped unbordered">
+                    <tbody>
+                        {% for option in enums.TIPOS_EFECTO %}
+                            <tr>
+                                <td>{{ check(option, mov.efecto_secundario.tipo) }}</td>
+                                <td>{{ option }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="large-2 subgroup">
+                <h6 class="subgroup-title">Morfometría de la presa</h6>
+                <table class="unstriped unbordered">
+                    <tbody>
+                        <tr>
+                            <td>Longitud(m)</td>
+                            <td>{{ mov.efecto_secundario.longitud_presa }}</td>
+                        </tr>
+                        <tr>
+                            <td>Altura(m)</td>
+                            <td>{{ mov.efecto_secundario.altura }}</td>
+                        </tr>
+                        <tr>
+                            <td>Ancho(m)</td>
+                            <td>{{ mov.efecto_secundario.ancho }}</td>
+                        </tr>
+                        <tr>
+                            <td>Talud aguas arriba(m)</td>
+                            <td>{{ mov.efecto_secundario.talud_arriba }}</td>
+                        </tr>
+                        <tr>
+                            <td>Talud aguas abajo(m)</td>
+                            <td>{{ mov.efecto_secundario.talud_abajo }}</td>
+                        </tr>
+                        <tr>
+                            <td>Volumen presa(m<sup>3</sup>)</td>
+                            <td>{{ mov.efecto_secundario.volumen_presa }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="large-4 subgroup">
+                <h6 class="subgroup-title">Condición de la presa</h6>
+                <table class="unstriped unbordered">
+                    <tbody>
+                        {% for option in enums.CONDICIONES_PRESA %}
+                            <tr>
+                                <td>{{ check(option[0], mov.efecto_secundario.condicion_presa) }}</td>
+                                <td>{{ option[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="large-4 subgroup">
+                <h6 class="subgroup-title">Morfometría del embalse</h6>
+                <table class="unbordered unstriped">
+                    <tbody>
+                        <tr>
+                            <td>Longitud(m)</td>
+                            <td>{{ mov.efecto_secundario.longitud_embalse }}</td>
+                        </tr>
+                        <tr>
+                            <td>Área del embalse(m<sup>2</sup>)</td>
+                            <td>{{ mov.efecto_secundario.area_embalse }}</td>
+                        </tr>
+                        <tr>
+                            <td>Volúmen embalsado(m<sup>3</sup>)</td>
+                            <td>{{ mov.efecto_secundario.volumen_embalse }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nivel de agua bajo corona(m)</td>
+                            <td>{{ mov.efecto_secundario.nivel_agua_corona }}</td>
+                        </tr>
+                        <tr>
+                            <td>Área cuenca(m<sup>2</sup>)</td>
+                            <td>{{ mov.efecto_secundario.area_cuenca }}</td>
+                        </tr>
+                        <tr>
+                            <td>Caudal entrada(m<sup>3</sup>/s)</td>
+                            <td>{{ mov.efecto_secundario.caudal_entrada }}</td>
+                        </tr>
+                        <tr>
+                            <td>Caudal salida(m<sup>3</sup>/s)</td>
+                            <td>{{ mov.efecto_secundario.caudal_salida }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tasa de llenado</td>
+                            <td>{{ mov.efecto_secundario.tasa_llenado }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="large-2 subgroup">
+            <h6 class="subgroup-title">Condición de la presa</h6>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        <td>{{ check(True, mov.efecto_secundario.tsunami) }}</td>
+                        <td>Tsunami</td>
+                    </tr>
+                    <tr>
+                        <td>{{ check(True, mov.efecto_secundario.empalizada) }}</td>
+                        <td>Empalizada</td>
+                    </tr>
+                    <tr>
+                        <td>{{ check(True, mov.efecto_secundario.sedimentacion) }}</td>
+                        <td>Sedimentación</td>
+                    </tr>
+                    <tr>
+                        <td>{{ check(True, mov.efecto_secundario.sismo) }}</td>
+                        <td>Sismo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="group grid-x">
+        <h5 class="group-title large-12">Daños</h5>
+        <div class="large-3 subgroup">
+            <h6 class="subgroup-title">Población</h6>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        <td>Número de muertos</td>
+                        <td class="text-right">{{ mov.dano.muertos }}</td>
+                    </tr>
+                    <tr>
+                        <td>Número de heridos</td>
+                        <td class="text-right">{{ mov.dano.heridos }}</td>
+                    </tr>
+                    <tr>
+                        <td>Número de damnificados</td>
+                        <td class="text-right">{{ mov.dano.damnificados }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr class="margin-top-2">
+            Convención para intensidad del daño<br>
+            DL: Daño leve<br>
+            DM: Daño moderado<br>
+            DS: Daño severo<br>
+            DT: Destrucción total total<br>
+            NC: No cuantificable
+        </div>
+        <div class="large-9 subgroup">
+            <h6 class="subgroup-title">Infraestructura (INF) / Actividades económicas (AE) / Daños ambientales (DA)</h5>
+            <table class="unstriped unbordered">
+                <tbody>
+                    <tr>
+                        {% for option in enums.ORIGENES_DANO %}
+                            <th rowspan="2" width="30">{{ option[0] }}</th>
+                        {% endfor %}
+                        <th rowspan="2" class="text-left">Tipo</th>
+                        <th rowspan="2" class="text-left">Unidad de medida</th>
+                        <th colspan="{{ enums.INTENSIDADES_DANO | length }}">Intensidad y cantidad</th>
+                        <th rowspan="2" class="text-left">Valor US$</th>
+                    </tr>
+                    <tr>
+                        
+                        {% for option in enums.INTENSIDADES_DANO %}
+                            <th width="40">{{ option[0] }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for detalle in mov.dano.detalles %}
+                        <tr>
+                            {% for option in enums.ORIGENES_DANO %}
+                                <td class="text-center">{{ check(option[0], detalle.origen) }}</td>   
+                            {% endfor %}
+                            <td>{{ detalle.tipo }}</td>
+                            <td>{{ detalle.unidad }}</td>
+                            {% for option in enums.INTENSIDADES_DANO %}
+                                <td class="text-center">{{ check(option[0], detalle.intensidad) }}</td>   
+                            {% endfor %}
+                            <td>{{ detalle.valor }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
