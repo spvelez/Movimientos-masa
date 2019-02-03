@@ -1,6 +1,9 @@
 from flask import (
-     Blueprint, flash, render_template, redirect, request, session, url_for
+     Blueprint, flash, current_app, render_template,
+     redirect, request, session, url_for
 )
+from weasyprint import HTML
+import masas.enums
 from masas import authorize
 from masas.database import db_session
 from masas.enums import ESPACIAMIENTOS, UserRole
@@ -88,12 +91,32 @@ def delete(id):
 
 
 @bp.route('/movimientos/view/<int:id>')
-@authorize(UserRole.user)
+@authorize()
 def view(id):
     movimiento = Movimiento.query.filter(Movimiento.id == id).first()
-
-    import masas.enums
 
     return render_template('/movimientos/view.html',
                            mov=movimiento,
                            enums=masas.enums)
+
+
+@bp.route('/movimientos/download/<int:id>')
+@authorize()
+def download(id):
+    movimiento = Movimiento.query.filter(Movimiento.id == id).first()
+
+    output_html = render_template('/movimientos/view.html',
+                                  mov=movimiento,
+                                  enums=masas.enums)
+
+    styles = ['./masas/static/css/print.css']
+
+    pdf = HTML(string=output_html).write_pdf(stylesheets=styles)
+
+    response = current_app.response_class(pdf, mimetype='application/pdf')
+
+    response.headers.add('Content-Disposition',
+                         'attachment',
+                         filename='movimiento-' + movimiento.codigo + '.pdf')
+
+    return response

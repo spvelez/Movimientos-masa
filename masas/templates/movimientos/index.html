@@ -24,11 +24,19 @@
                 {% for mov in movimientos %}
                     <tr>
                         <td>
-                            {% if not is_admin %}
-                                <a href="{{ url_for('.edit', id=mov.id)}}">Editar</a> |
-                                <a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a> |
-                            {% endif %}
-                            <a href="{{ url_for('.view', id=mov.id) }}">Ver</a>
+                            <ul class="dropdown menu" data-dropdown-menu>
+                                <li>
+                                    <a href="#">Opciones</a>
+                                    <ul class="menu">
+                                        {% if not is_admin %}
+                                            <li><a href="{{ url_for('.edit', id=mov.id)}}">Editar</a></li>
+                                            <li><a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a></li>
+                                        {% endif %}
+                                        <li><a href="{{ url_for('.view', id=mov.id) }}">Imprimir</a></li>
+                                        <li><a href="{{ url_for('.download', id=mov.id) }}">Descargar</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </td>
                         <td>{{ mov.id }}</td>
                         <td>{{ mov.encuestador }}</td>

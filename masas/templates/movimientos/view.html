@@ -12,71 +12,21 @@
 {% endmacro %}
 
 {% block styles %}
-    <style>
-        html { font-size: 12px; }
-        .group-title { 
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-            margin-bottom: 0;
-            text-align: center;
-        }
-        .subgroup-title {
-            margin-bottom: 0;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
-        div.group {
-            border: 1px solid #ddd;
-            border-right: none;
-            margin-top: 5px;
-        }
-        div.subgroup {
-            border-right: 1px solid #ddd;
-        }
-
-        .check {
-            display:inline-block; 
-            width:10px; 
-            height:10px;
-            border:1px solid #000;
-        }
-
-        .check.selected {
-            border-width: 5px;
-        }
-
-        table.unbordered {
-            border-collapse: unset;
-        }
-
-        table.unbordered td {
-            padding: 0;
-        }
-
-        @media print {
-            html {
-                font-size: 9px;
-            }
-
-            div.group {
-                page-break-inside: avoid;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/print.css">
 {% endblock %}
 {% block title %}Ver movimiento{% endblock %}
 {% block body %}
-    <h5 class="text-center"><strong>Formato para inventario de movimientos en masa</strong></h3>
-    <strong class="margin-right-1">Nombre del encuestador</strong> {{ mov.encuestador }}
-    <strong class="margin-horizontal-1">Fecha</strong> {{ mov.fecha.strftime('%Y-%m-%d') }}
-    <strong class="margin-horizontal-1">Institución</strong> {{ mov.institucion }}
-    <strong class="margin-horizontal-1">Código del evento</strong> {{ mov.codigo }}
+    <h3 class="text-center"><strong>Formato para inventario de movimientos en masa</strong></h3>
+    <strong class="m-right">Nombre del encuestador</strong> {{ mov.encuestador }}
+    <strong class="m-horizontal">Fecha</strong> {{ mov.fecha.strftime('%Y-%m-%d') }}
+    <strong class="m-horizontal">Institución</strong> {{ mov.institucion }}
+    <strong class="m-horizontal">Código del evento</strong> {{ mov.codigo }}
     
-    <div class="grid-x group">
-        <h5 class="large-12 group-title">Localización geográfica y documental del evento</h5>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Por división política</h6>
-            <table class="unstriped unbordered">
+    <div class="grid group">
+        <h4 class="group-title">Localización geográfica y documental del evento</h4>
+        <div class="col-1-5 subgroup">
+            <h5 class="subgroup-title">Por división política</h5>
+            <table>
                 <tbody>
                     <tr>
                         <td>País</td>
@@ -97,9 +47,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Coordenadas</h6>
-            <table class="unstriped unbordered">
+        <div class="col-1-5 subgroup">
+            <h5 class="subgroup-title">Coordenadas</h5>
+            <table>
                 <tbody>
                     <tr>
                         <td>Sitio</td>
@@ -125,15 +75,15 @@
                 </tbody>
             </table>
         </div>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Referentes geográficos</h6>
+        <div class="col-1-5 subgroup">
+            <h5 class="subgroup-title">Referentes geográficos</h5>
             {{ mov.localizacion.ref_geograficos }}
         </div>
-        <div class="large-6 subgroup">
-            <h6 class="subgroup-title">Documentación</h6>
-            <div class="grid-x">
-                <div class="large-6 subgroup">
-                    <table class="unstriped unbordered">
+        <div class="col-3-5 subgroup">
+            <h5 class="subgroup-title">Documentación</h5>
+            <div class="grid">
+                <div class="col-1-2 subgroup">
+                    <table>
                         <tbody>
                             <tr>
                                 <td>Mapa/Plancha No.</td>
@@ -152,8 +102,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="large-6">
-                    <table class="unstriped unbordered">
+                <div class="col-1-2">
+                    <table>
                         <tbody>
                             <tr>
                                 <td>Fotografía No.</td>
@@ -176,26 +126,26 @@
         </div>
     </div>
 
-    <div class="grid-x group">
-        <div class="large-5">
-            <h5 class="group-title">Actividad del movimiento</h5>
-            <div class="grid-x">
-                <div class="large-6 subgroup">
-                    <h6 class="subgroup-title">Fechas de ocurrencia</h6>
-                    <span class="margin-right-1">Primer movimiento</span> {{ mov.actividad.primera_fecha.strftime('%Y-%m-%d') }} <br>
-                    <span class="margin-right-1">Último movimiento</span> {{ mov.actividad.ultima_fecha.strftime('%Y-%m-%d') }} <br>
-                    <span class="margin-right-1">Edad</span> {{ mov.actividad.edad }} <br>
+    <div class="grid group">
+        <div class="col-5-12">
+            <h4 class="group-title">Actividad del movimiento</h4>
+            <div class="grid">
+                <div class="col-1-4 subgroup">
+                    <h5 class="subgroup-title">Fechas de ocurrencia</h5>
+                    <span class="m-right">Primer movimiento</span> {{ mov.actividad.primera_fecha.strftime('%Y-%m-%d') }} <br>
+                    <span class="m-right">Último movimiento</span> {{ mov.actividad.ultima_fecha.strftime('%Y-%m-%d') }} <br>
+                    <span class="m-right">Edad</span> {{ mov.actividad.edad }} <br>
                 </div>
-                <div class="large-2 subgroup">
-                    <h6 class="subgroup-title">Estado</h6>
+                <div class="col-1-4 subgroup">
+                    <h5 class="subgroup-title">Estado</h5>
                     {{ check_list(enums.ESTADOS_ACTIVIDAD, mov.actividad.estado) }}
                 </div>
-                <div class="large-2 subgroup">
-                    <h6 class="subgroup-title">Estilo</h6>
+                <div class="col-1-4 subgroup">
+                    <h5 class="subgroup-title">Estilo</h5>
                     {{ check_list(enums.ESTILOS_ACTIVIDAD, mov.actividad.estilo) }}
                 </div>
-                <div class="large-2 subgroup">
-                    <h6 class="subgroup-title">Distribución</h6>
+                <div class="col-1-4 subgroup">
+                    <h5 class="subgroup-title">Distribución</h5>
                     {{ check(True, mov.actividad.distribucion.retrogresivo) }} Retrogresivo <br>
                     {{ check(True, mov.actividad.distribucion.avanzado) }} Avanzado <br>
                     {{ check(True, mov.actividad.distribucion.ensanchado) }} Ensanchado <br>
@@ -206,35 +156,36 @@
                 </div>
             </div>
         </div>
-        <div class="large-7 subgroup">
-            <h5 class="group-title">Litología y estratigrafía</h5>
-            <div class="grid-x">
-                <div class="large-3 subgroup">
-                    <h6 class="subgroup-title">Descripción</h6>
+        <div class="col-7-12 subgroup">
+            <h4 class="group-title">Litología y estratigrafía</h4>
+            <div class="grid">
+                <div class="col-3-12 subgroup">
+                    <h5 class="subgroup-title">Descripción</h5>
                 </div>
-                <div class="large-2">
-                    <h6 class="subgroup-title">Estructura</h6>
+                <div class="col-2-12">
+                    <h5 class="subgroup-title">Estructura</h5>
                 </div>
-                <div class="large-2">
-                    <h6 class="subgroup-title">Orientación</h6>
+                <div class="col-2-12">
+                    <h5 class="subgroup-title">Orientación</h5>
                 </div>
-                <div class="large-5">
-                    <h6 class="subgroup-title">Espaciamiento</h6>
+                <div class="col-5-12">
+                    <h5 class="subgroup-title">Espaciamiento</h5>
                 </div>
-
-                <div class="large-3">
+            </div>
+            <div class="grid">
+                <div class="col-3-12">
                     {{ mov.litologia.descripcion }}
                 </div>
-                <div class="large-2">
-                    <table class="stack unstriped">
+                <div class="col-2-12">
+                    <table>
                         <tr><td>&nbsp;</td></tr>
                         {% for item in mov.litologia.detalles %}
                             <tr><td>{{ item.estructura }}</td></tr>
                         {% endfor %}
                     </table>
                 </div>
-                <div class="large-2">
-                    <table class="stack unstriped">
+                <div class="col-2-12">
+                    <table>
                         <tr><td>DB</td><td>BZ</td></tr>
                         {% for item in mov.litologia.detalles %}
                             <tr>
@@ -244,8 +195,8 @@
                         {% endfor %}
                     </table>
                 </div>
-                <div class="large-5">
-                    <table class="stack unstriped">
+                <div class="col-5-12">
+                    <table>
                         <tr>
                             {% for option in enums.ESPACIAMIENTOS %}
                                 <td class="text-center">{{ option }}</td>
@@ -266,12 +217,12 @@
         </div>
     </div>
     
-    <div class="grid-x group">
-        <h5 class="large-12 group-title">Clasificación del movimiento</h5>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Tipo de movimiento</h6>
+    <div class="grid group">
+        <h4 class="group-title">Clasificación del movimiento</h4>
+        <div class="col-2-12 subgroup">
+            <h5 class="subgroup-title">Tipo de movimiento</h5>
 
-            <table class="unstriped unbordered">
+            <table>
                 <tbody>
                     <tr><td>1</td><td>2</td><td></td></tr>
                     {% for option in enums.TIPOS_MOVIMIENTO %}
@@ -285,10 +236,10 @@
             </table>
         </div>
 
-        <div class="large-5 grid-x subgroup">
-            <h6 class="large-12 subgroup-title">Material</h6>
-            <div class="large-5 subgroup">
-                <table class="unbordered unstriped">
+        <div class="col-5-12 grid subgroup">
+            <h5 class="subgroup-title">Material</h5>
+            <div class="col-5-12 subgroup">
+                <table>
                     <tbody>
                         <tr>
                             <td></td>
@@ -311,7 +262,7 @@
                             <td class="text-right">{{ mov.clasificacion.tierra_dos }}</td>
                         </tr>
                         <tr>
-                            <td colspan="3"><h6 class="margin-vertical-1">Suelos ingeniería</h6></td>
+                            <td colspan="3"><h5 class="margin-vertical-1">Suelos ingeniería</h5></td>
                         </tr>
                         <tr>
                             <td>Bloques</td>
@@ -349,10 +300,10 @@
                 <br>
                 <small>M.O.: Materia orgánica. turba</small>
             </div>
-            <div class="large-7 grid-x">
-                <div class="large-6 subgroup">
-                    <h6 class="subgroup-title">Humedad del suelo</h6>
-                    <table class="unbordered unstriped">
+            <div class="col-7-12 grid">
+                <div class="col-6-12 subgroup">
+                    <h5 class="subgroup-title">Humedad del suelo</h5>
+                    <table>
                         <tbody>
                             <tr>
                                 <td>1</td><td>2</td><td></td>
@@ -367,16 +318,16 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="large-6">
-                    <h6 class="subgroup-title">Origen del suelo</h6>
+                <div class="col-6-12">
+                    <h5 class="subgroup-title">Origen del suelo</h5>
                     {% for option in enums.ORIGENES_SUELO %}
                         {{ check(option[0], mov.clasificacion.origen) }} {{ option[1] }} <br>
                     {% endfor %}
                 </div>
 
-                <div class="large-6 subgroup">
-                    <h6 class="subgroup-title">Plasticidad</h6>
-                    <table class="unbordered unstriped">
+                <div class="col-6-12 subgroup">
+                    <h5 class="subgroup-title">Plasticidad</h5>
+                    <table>
                         <tbody>
                             <tr>
                                 <td>1</td><td>2</td><td></td>
@@ -391,25 +342,25 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="large-6">
-                    <h6 class="subgroup-title">Clasificación USCS</h6>
+                <div class="col-6-12">
+                    <h5 class="subgroup-title">Clasificación USCS</h5>
                     {{ mov.clasificacion.uscs }}
                 </div>
             </div>
         </div>
 
-        <div class="large-5 grid-x">
-            <div class="large-4 subgroup">
-                <h6 class="subgroup-title">Otras características</h6>
+        <div class="col-5-12 grid">
+            <div class="col-4-12 subgroup">
+                <h5 class="subgroup-title">Otras características</h5>
                 {{ check(True, mov.clasificacion.canalizado) }} Movimiento canalizado <br>
                 {{ check(True, mov.clasificacion.no_canalizado) }} Movimiento no canalizado <br>
                 {{ check(True, mov.clasificacion.licuacion) }} Licuación <br>
                 {{ check(True, mov.clasificacion.otra_caracteristica != None) }}Otra describir <br>{{ mov.clasificacion.otra_caracteristica }}
             </div>
-            <div class="large-8 subgroup">
-                <h6 class="subgroup-title">Velocidad</h6>
-                <div class="grid-x">
-                    <table class="unstriped unbordered large-8">
+            <div class="col-8-12 subgroup">
+                <h5 class="subgroup-title">Velocidad</h5>
+                <div class="grid">
+                    <table class="unstriped unbordered col-8-12">
                         <tbody>
                             <tr>
                                 <td></td>
@@ -424,7 +375,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <div class="large-4">
+                    <div class="col-4-12">
                         Vmax. {{ mov.clasificacion.vmax }}<br>
                         Vmedia. {{ mov.clasificacion.vmedia }}
                     </div>
@@ -433,11 +384,11 @@
         </div>
     </div>
 
-    <div class="grid-x group">
-        <h5 class="large-12 group-title">Morfometría</h5>
-        <div class="large-3 subgroup">
-            <h6 class=" subgroup-title">General</h6>
-            <table class="unstriped unbordered">
+    <div class="grid group">
+        <h4 class="group-title">Morfometría</h4>
+        <div class="col-3-12 subgroup">
+            <h5 class=" subgroup-title">General</h5>
+            <table>
                 <tbody>
                     <tr>
                         <td>Diferencia de altura corona a punta (m)</td>
@@ -470,9 +421,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="large-5 grid-x subgroup">
-            <h6 class="subgroup-title large-12">Dimensiones</h6>
-            <table class="large-6 unbordered unstriped">
+        <div class="col-5-12 grid subgroup">
+            <h5 class="subgroup-title large-12">Dimensiones</h5>
+            <table class="col-6-12 unbordered unstriped">
                 <tbody>
                     <tr>
                         <td>Profundida de la superficie de falla Dr(m)</td>
@@ -504,7 +455,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="large-6 unbordered unstriped">
+            <table class="col-6-12 unbordered unstriped">
                 <tbody>
                     <tr>
                         <td>Volumen inicial(m<sup>3</sup>)</td>
@@ -534,10 +485,10 @@
             </table>
         </div>
 
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title large-12">Deformación del terreno</h6>
-            <div class="grid-x">
-                <table class="large-6 unbordered unstriped">
+        <div class="col-2-12 subgroup">
+            <h5 class="subgroup-title large-12">Deformación del terreno</h5>
+            <div class="grid">
+                <table class="col-6-12 unbordered unstriped">
                     <tbody>
                         <tr>
                             <td></td><td>Modo</td>
@@ -550,7 +501,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <table class="large-6 unbordered unstriped">
+                <table class="col-6-12 unbordered unstriped">
                     <tbody>
                         <tr>
                             <td></td><td>Severidad</td>
@@ -565,16 +516,16 @@
                 </table>
             </div>
         </div>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Geoforma</h6>
+        <div class="col-2-12 subgroup">
+            <h5 class="subgroup-title">Geoforma</h5>
         </div>
     </div>
 
-    <div class="group grid-x">
-        <div class="large-7">
-            <h5 class="group-title">Causas del movimiento</h5>
-            <div class="grid-x subgroup">
-                <table class="large-4 unstriped unbordered">
+    <div class="group grid">
+        <div class="col-7-12">
+            <h4 class="group-title">Causas del movimiento</h4>
+            <div class="grid subgroup">
+                <table class="col-4-12 unstriped unbordered">
                     <tbody>
                         <tr>
                             <td>C</td>
@@ -634,7 +585,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="large-4 unstriped unbordered">
+                <table class="col-4-12 unstriped unbordered">
                     <tbody>
                         <tr>
                             <td>C</td>
@@ -708,7 +659,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="large-4 unstriped unbordered">
+                <table class="col-4-12 unstriped unbordered">
                     <tbody>
                         <tr>
                             <td>C</td>
@@ -779,10 +730,10 @@
                 </table>
             </div>
         </div>
-        <div class="large-5 subgroup">
-            <h5 class="group-title">Cobertura y uso del suelo</h5>
-            <div class="grid-x">
-                <table class="large-6 unstriped unbordered">
+        <div class="col-5-12 subgroup">
+            <h4 class="group-title">Cobertura y uso del suelo</h4>
+            <div class="grid">
+                <table class="col-6-12 unstriped unbordered">
                     <tbody>
                         <tr>
                             <td>Tipo uso</td>
@@ -818,7 +769,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="large-6 unstriped unbordered">
+                <table class="col-6-12 unstriped unbordered">
                     <tbody>
                         <tr>
                             <td>Tipo uso</td>
@@ -867,7 +818,7 @@
     </div>
 
     <div class="group subgroup">
-        <h5 class="group-title">Documentos de referencia</h5>
+        <h4 class="group-title">Documentos de referencia</h4>
         <table class="unstriped">
             <tbody>
                 <tr>
@@ -894,13 +845,13 @@
         </table>
     </div>
 
-    <div class="group grid-x">
-        <h5 class="large-12 group-title">Efectos secundarios</h5>
-        <div class="large-10 grid-x subgroup">
-            <h6 class="subgroup-title large-12">Represamiento</h6>
-            <div class="large-2 subgroup">
-                <h6 class="subgroup-title">Tipo (Costa & Schuster)</h6>
-                <table class="unstriped unbordered">
+    <div class="group grid">
+        <h4 class="group-title">Efectos secundarios</h4>
+        <div class="col-10-12 grid subgroup">
+            <h5 class="subgroup-title large-12">Represamiento</h5>
+            <div class="col-2-12 subgroup">
+                <h5 class="subgroup-title">Tipo (Costa & Schuster)</h5>
+                <table>
                     <tbody>
                         {% for option in enums.TIPOS_EFECTO %}
                             <tr>
@@ -911,9 +862,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="large-2 subgroup">
-                <h6 class="subgroup-title">Morfometría de la presa</h6>
-                <table class="unstriped unbordered">
+            <div class="col-2-12 subgroup">
+                <h5 class="subgroup-title">Morfometría de la presa</h5>
+                <table>
                     <tbody>
                         <tr>
                             <td>Longitud(m)</td>
@@ -942,9 +893,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="large-4 subgroup">
-                <h6 class="subgroup-title">Condición de la presa</h6>
-                <table class="unstriped unbordered">
+            <div class="col-4-12 subgroup">
+                <h5 class="subgroup-title">Condición de la presa</h5>
+                <table>
                     <tbody>
                         {% for option in enums.CONDICIONES_PRESA %}
                             <tr>
@@ -955,9 +906,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="large-4 subgroup">
-                <h6 class="subgroup-title">Morfometría del embalse</h6>
-                <table class="unbordered unstriped">
+            <div class="col-4-12 subgroup">
+                <h5 class="subgroup-title">Morfometría del embalse</h5>
+                <table>
                     <tbody>
                         <tr>
                             <td>Longitud(m)</td>
@@ -995,9 +946,9 @@
                 </table>
             </div>
         </div>
-        <div class="large-2 subgroup">
-            <h6 class="subgroup-title">Condición de la presa</h6>
-            <table class="unstriped unbordered">
+        <div class="col-2-12 subgroup">
+            <h5 class="subgroup-title">Condición de la presa</h5>
+            <table>
                 <tbody>
                     <tr>
                         <td>{{ check(True, mov.efecto_secundario.tsunami) }}</td>
@@ -1020,11 +971,11 @@
         </div>
     </div>
 
-    <div class="group grid-x">
-        <h5 class="group-title large-12">Daños</h5>
-        <div class="large-3 subgroup">
-            <h6 class="subgroup-title">Población</h6>
-            <table class="unstriped unbordered">
+    <div class="group grid">
+        <h4 class="group-title">Daños</h4>
+        <div class="col-3-12 subgroup1">
+            <h5 class="subgroup-title">Población</h5>
+            <table>
                 <tbody>
                     <tr>
                         <td>Número de muertos</td>
@@ -1040,7 +991,7 @@
                     </tr>
                 </tbody>
             </table>
-            <hr class="margin-top-2">
+            <hr class="m-top">
             Convención para intensidad del daño<br>
             DL: Daño leve<br>
             DM: Daño moderado<br>
@@ -1048,13 +999,13 @@
             DT: Destrucción total total<br>
             NC: No cuantificable
         </div>
-        <div class="large-9 subgroup">
-            <h6 class="subgroup-title">Infraestructura (INF) / Actividades económicas (AE) / Daños ambientales (DA)</h5>
-            <table class="unstriped unbordered">
+        <div class="col-9-12 subgroup1">
+            <h5 class="subgroup-title">Infraestructura (INF) / Actividades económicas (AE) / Daños ambientales (DA)</h4>
+            <table>
                 <tbody>
                     <tr>
                         {% for option in enums.ORIGENES_DANO %}
-                            <th rowspan="2" width="30">{{ option[0] }}</th>
+                            <th class="text-center" rowspan="2" width="30">{{ option[0] }}</th>
                         {% endfor %}
                         <th rowspan="2" class="text-left">Tipo</th>
                         <th rowspan="2" class="text-left">Unidad de medida</th>
@@ -1064,7 +1015,7 @@
                     <tr>
                         
                         {% for option in enums.INTENSIDADES_DANO %}
-                            <th width="40">{{ option[0] }}</th>
+                            <th class="text-center" width="40">{{ option[0] }}</th>
                         {% endfor %}
                     </tr>
                     {% for detalle in mov.dano.detalles %}
