@@ -6,7 +6,7 @@ from weasyprint import HTML
 import masas.enums
 from masas import authorize
 from masas.core.observers import CreateObserver, DeleteObserver
-from masas.database import db_session
+from masas.core.database import db_session
 from masas.enums import ESPACIAMIENTOS, UserRole
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (

@@ -2,7 +2,7 @@ from sqlalchemy import (
     Boolean, Column, DateTime, ForeignKey,
     Integer, Float, String, Text)
 from sqlalchemy.orm import relationship, reconstructor
-from masas.database import DbModel
+from masas.core.database import DbModel
 
 
 class Movimiento(DbModel):

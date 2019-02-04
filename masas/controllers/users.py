@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from masas import authorize
 from masas.enums import UserRole
 from masas.models.user import User
-from masas.database import db_session
+from masas.core.database import db_session
 from masas.forms import UserForm
 
 bp = Blueprint('users', __name__, template_folder='templates')

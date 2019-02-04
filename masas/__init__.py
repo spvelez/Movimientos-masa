@@ -18,7 +18,7 @@ class AppBuilder:
 
     def init_db(self):
         with self.app.app_context():
-            from . import database
+            from .core import database
 
             self.app.teardown_appcontext(database.close_db)
             self.app.cli.add_command(database.init_db_command)

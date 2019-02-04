@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from masas.database import DbModel
+from masas.core.database import DbModel
 
 
 class User(DbModel):
