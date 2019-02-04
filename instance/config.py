@@ -6,3 +6,11 @@ DEBUG = True
 DB_CONNECTION = ''
 
 SECRET_KEY = '##secret_key##'
+
+EMAIL_SERVER = ''
+
+EMAIL_USER = ''
+
+EMAIL_PWD = ''
+
+EMAIL_NOTIFY = ''

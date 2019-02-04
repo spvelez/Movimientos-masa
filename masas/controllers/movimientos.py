@@ -5,6 +5,7 @@ from flask import (
 from weasyprint import HTML
 import masas.enums
 from masas import authorize
+from masas.core.observers import CreateObserver, DeleteObserver
 from masas.database import db_session
 from masas.enums import ESPACIAMIENTOS, UserRole
 from masas.forms import MovimientoForm
@@ -54,6 +55,10 @@ def create():
         db_session.add(mov)
         db_session.commit()
 
+        observer = CreateObserver()
+        mov.suscribe(observer)
+        mov.notify(session['user_login'])
+
         return redirect(url_for('.index'))
 
     return render_template('movimientos/form.html',
@@ -69,10 +74,10 @@ def edit(id):
     form = MovimientoForm(formData, obj=mov)
 
     if request.method == 'POST' and form.validate():
-        print('embalse: ', form.causa.embalse.data)
         form.populate_obj(mov)
 
         db_session.commit()
+
         return redirect(url_for('.index'))
 
     return render_template('/movimientos/form.html',
@@ -84,8 +89,13 @@ def edit(id):
 @authorize(UserRole.user)
 def delete(id):
     mov = Movimiento.query.filter(Movimiento.id == id).first()
+
     db_session.delete(mov)
     db_session.commit()
+
+    observer = DeleteObserver()
+    mov.suscribe(observer)
+    mov.notify(session['user_login'])
 
     return redirect(url_for('.index'))
 

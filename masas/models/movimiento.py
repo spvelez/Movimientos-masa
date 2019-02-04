@@ -1,7 +1,7 @@
 from sqlalchemy import (
     Boolean, Column, DateTime, ForeignKey,
     Integer, Float, String, Text)
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, reconstructor
 from masas.database import DbModel
 
 
@@ -30,6 +30,25 @@ class Movimiento(DbModel):
     documentos_ref = relationship('DocumentoReferencia', backref='movimiento')
     efecto_secundario = relationship('EfectoSecundario', uselist=False)
     dano = relationship('Dano', uselist=False)
+
+    def __init__(self):
+        self._observers = set()
+
+    @reconstructor
+    def init_on_load(self):
+        self._observers = set()
+
+    def suscribe(self, observer):
+        observer.publisher = self
+        self._observers.add(observer)
+
+    def unsuscribe(self, observer):
+        observer.publisher = None
+        self._observers.discard(observer)
+
+    def notify(self, author):
+        for o in self._observers:
+            o.update(author)
 
 
 class Localizacion(DbModel):
