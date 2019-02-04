@@ -4,9 +4,11 @@ from flask import (
 from werkzeug.exceptions import NotFound
 from masas.enums import UserRole
 from masas.models.user import User
-from masas.core.database import db_session
+from masas.repositories.userrepo import UserRepository
+
 
 bp = Blueprint('api', __name__)
+user_repo = UserRepository()
 
 
 def format_user(user):
@@ -21,14 +23,14 @@ def format_user(user):
 
 @bp.route('/api/users')
 def all_users():
-    users = User.query.all()
+    users = user_repo.get_all()
 
     return jsonify([format_user(u) for u in users])
 
 
 @bp.route('/api/users/<int:id>')
 def user(id):
-    user = User.query.filter(User.id == id).first()
+    user = user_repo.get_by_id(id)
 
     if (user is None):
         raise NotFound('No existe el usuario con id %d' % id)

@@ -6,9 +6,10 @@ from masas import authorize
 from masas.enums import UserRole
 from masas.forms import ChangePasswordForm
 from masas.models.user import User
-from masas.core.database import db_session
+from masas.repositories.userrepo import UserRepository
 
 bp = Blueprint('account', __name__, template_folder='templates')
+user_repo = UserRepository()
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -17,7 +18,7 @@ def login():
         login = request.form['login']
         password = request.form['password']
 
-        user = User.query.filter(User.login == login).first()
+        user = user_repo.get_by_login(login)
 
         if user is None or not check_password_hash(user.password, password):
             flash('Usuario o contraseña incorrectos')
@@ -42,14 +43,14 @@ def logout():
 def change_password():
     form = ChangePasswordForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = User.query.filter(User.id == session['user_id']).first()
+        user = user_repo.get_by_id(session['user_id'])
 
         if not check_password_hash(user.password, form.password.data):
             flash('La contraseña actual es incorrecta')
         else:
             new_password = form.new_password.data
             user.password = generate_password_hash(new_password)
-            db_session.commit()
+            user_repo.persist(user)
 
             return redirect(url_for('index'))
 

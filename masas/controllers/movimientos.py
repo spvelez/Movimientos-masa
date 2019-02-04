@@ -6,21 +6,22 @@ from weasyprint import HTML
 import masas.enums
 from masas import authorize
 from masas.core.observers import CreateObserver, DeleteObserver
-from masas.core.database import db_session
 from masas.enums import ESPACIAMIENTOS, UserRole
 from masas.forms import MovimientoForm
 from masas.models.movimiento import (
     Movimiento, Localizacion, Mapa, Foto, Actividad, Distribucion, Litologia,
     Clasificacion, Morfometria, Causa, CoberturaSuelo, UsoSuelo,
     EfectoSecundario, Dano)
+from masas.repositories.movimientorepo import MovimientoRepository
 
 bp = Blueprint('movimientos', __name__, template_folder='templates')
+mov_repo = MovimientoRepository()
 
 
 @bp.route('/movimientos')
 @authorize()
 def index():
-    lista = Movimiento.query.all()
+    lista = mov_repo.get_all()
     return render_template('movimientos/index.html', movimientos=lista)
 
 
@@ -52,8 +53,7 @@ def create():
 
         mov.usuario_id = session['user_id']
 
-        db_session.add(mov)
-        db_session.commit()
+        mov_repo.persist(mov)
 
         observer = CreateObserver()
         mov.suscribe(observer)
@@ -76,7 +76,7 @@ def edit(id):
     if request.method == 'POST' and form.validate():
         form.populate_obj(mov)
 
-        db_session.commit()
+        mov_repo.persist(mov)
 
         return redirect(url_for('.index'))
 
@@ -88,10 +88,9 @@ def edit(id):
 @bp.route('/movimientos/delete/<int:id>', methods=['POST'])
 @authorize(UserRole.user)
 def delete(id):
-    mov = Movimiento.query.filter(Movimiento.id == id).first()
+    mov = mov_repo.get_by_id(id)
 
-    db_session.delete(mov)
-    db_session.commit()
+    mov_repo.delete(mov)
 
     observer = DeleteObserver()
     mov.suscribe(observer)
@@ -103,7 +102,7 @@ def delete(id):
 @bp.route('/movimientos/view/<int:id>')
 @authorize()
 def view(id):
-    movimiento = Movimiento.query.filter(Movimiento.id == id).first()
+    movimiento = mov_repo.get_by_id(id)
 
     return render_template('/movimientos/view.html',
                            mov=movimiento,
@@ -113,7 +112,7 @@ def view(id):
 @bp.route('/movimientos/download/<int:id>')
 @authorize()
 def download(id):
-    movimiento = Movimiento.query.filter(Movimiento.id == id).first()
+    movimiento = mov_repo.get_by_id(id)
 
     output_html = render_template('/movimientos/view.html',
                                   mov=movimiento,

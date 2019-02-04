@@ -7,14 +7,17 @@ from masas.enums import UserRole
 from masas.models.user import User
 from masas.core.database import db_session
 from masas.forms import UserForm
+from masas.repositories.userrepo import UserRepository
+
 
 bp = Blueprint('users', __name__, template_folder='templates')
+user_repo = UserRepository()
 
 
 @bp.route('/users')
 @authorize(UserRole.admin)
 def index():
-    users = User.query.all()
+    users = user_repo.get_all()
     return render_template('users/index.html', users=users)
 
 
@@ -29,8 +32,7 @@ def create():
         form.populate_obj(usr)
 
         usr.password = generate_password_hash(usr.password)
-        db_session.add(usr)
-        db_session.commit()
+        user_repo.persist(usr)
 
         return redirect(url_for('.index'))
 
@@ -50,7 +52,7 @@ def edit(id):
         form.populate_obj(user)
 
         user.password = generate_password_hash(user.password)
-        db_session.commit()
+        user_repo.persist(user)
 
         return redirect(url_for('.index'))
 
@@ -60,8 +62,7 @@ def edit(id):
 @bp.route('/users/delete/<int:id>', methods=['POST'])
 @authorize(UserRole.admin)
 def delete(id):
-    usr = User.query.filter(User.id == id).first()
-    db_session.delete(usr)
-    db_session.commit()
+    usr = user_repo.get_by_id(id)
+    user_repo.delete(usr)
 
     return redirect(url_for('.index'))
