@@ -1,55 +1,75 @@
 {%extends '/layout.html'%}
 {% set is_admin = session['user_role'] == 'admin' %}
 {%block title%}Movimientos de masas{%endblock%}
+{% block scripts %}
+    <script type="text/javascript" src="/static/js/vendor/jquery.dynatable.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var table = $('#tb-movimientos');
+            
+            table.dynatable({
+                features: {
+                    pushState: false,
+                    sort: false
+                },
+                dataset: {
+                    ajax: true,
+                    records: []
+                }
+            });
+
+            table.on('dynatable:afterUpdate', function (data) {
+                table.find('.dropdown').each(function (index, item) {
+                    new Foundation.DropdownMenu($(item), {});
+                });
+            });
+
+            var template = $('#links-tmpl').html();
+            var settings = table.data('dynatable').settings;
+
+            settings.table.columns[0].attributeWriter = function(record) { 
+                var value = record[this.id];
+
+                return template.replace(/0/g, value);
+            };            
+        });
+    </script>
+{% endblock %}
 {%block body%}    
     <h3>Movimientos de masas</h1>
     {% if not is_admin %}
-        <a href="{{ url_for('.create') }}" class="button">Nuevo movimiento</a>
+        <p>
+            <a href="{{ url_for('.create') }}" class="button">Nuevo movimiento</a>
+        </p>
     {% endif %}
     
-    {% if movimientos %}
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Id</th>
-                    <th>Encuestador</th>
-                    <th>Fecha</th>
-                    <th>Institución</th>
-                    <th>Código</th>
-                    <th>Usuario registra</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for mov in movimientos %}
-                    <tr>
-                        <td>
-                            <ul class="dropdown menu" data-dropdown-menu>
-                                <li>
-                                    <a href="#">Opciones</a>
-                                    <ul class="menu">
-                                        {% if not is_admin %}
-                                            <li><a href="{{ url_for('.edit', id=mov.id)}}">Editar</a></li>
-                                            <li><a href="{{ url_for('.delete', id=mov.id)}}" class="delete-confirm">Eliminar</a></li>
-                                        {% endif %}
-                                        <li><a href="{{ url_for('.view', id=mov.id) }}">Imprimir</a></li>
-                                        <li><a href="{{ url_for('.download', id=mov.id) }}">Descargar</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </td>
-                        <td>{{ mov.id }}</td>
-                        <td>{{ mov.encuestador }}</td>
-                        <td>{{ mov.fecha }}</td>
-                        <td>{{ mov.institucion }}</td>
-                        <td>{{ mov.codigo }}</td>
-                        <td>{{ mov.usuario.name }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <h5 class="margin-top-3 text-center">Aún no se han creado movimientos</h3>
-    {% endif %}
-                
+    <table id="tb-movimientos">
+        <thead>
+            <tr>
+                <th data-dynatable-column="id"></th>
+                <th>Encuestador</th>
+                <th>Fecha</th>
+                <th data-dynatable-column="institucion">Institución</th>
+                <th data-dynatable-column="codigo">Código</th>
+                <th data-dynatable-column="usuario">Usuario registra</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script type="text/html" id="links-tmpl">
+        <ul class="dropdown menu" data-dropdown-menu>
+            <li>
+                <a href="#">Opciones</a>
+                <ul class="menu">
+                    {% if not is_admin %}
+                        <li><a href="{{ url_for('.edit', id=0)}}">Editar</a></li>
+                        <li><a href="{{ url_for('.delete', id=0)}}" class="delete-confirm">Eliminar</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('.view', id=0) }}">Imprimir</a></li>
+                    <li><a href="{{ url_for('.download', id=0) }}">Descargar</a></li>
+                </ul>
+            </li>
+        </ul>
+    </script>               
 {%endblock%}

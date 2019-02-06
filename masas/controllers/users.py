@@ -1,5 +1,5 @@
 from flask import (
-     Blueprint, flash, render_template, redirect, request, url_for
+     Blueprint, flash, jsonify, render_template, redirect, request, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from masas import authorize
@@ -17,8 +17,28 @@ user_repo = UserRepository()
 @bp.route('/users')
 @authorize(UserRole.admin)
 def index():
-    users = user_repo.get_all()
-    return render_template('users/index.html', users=users)
+    if not request.is_xhr:
+        return render_template('users/index.html')
+
+    search = request.args.get('queries[search]', '')
+    limit = request.args.get('perPage', 0)
+    offset = request.args.get('offset', 0)
+
+    users = user_repo.get_list(search, limit, offset)
+
+    def format_user(user):
+        role = UserRole.from_value(user.role)
+        return {
+            'id': user.id,
+            'login': user.login,
+            'name': user.name,
+            'role': role.value[1]
+        }
+
+    return jsonify({
+        'registros': [format_user(u) for u in users[1]],
+        'total': users[0]
+    })
 
 
 @bp.route('/users/create', methods=['GET', 'POST'])

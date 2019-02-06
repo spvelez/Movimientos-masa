@@ -1,31 +1,52 @@
 {%extends '/layout.html'%}
 {%block title%}Usuarios{%endblock%}
+{% block scripts %}
+    <script type="text/javascript" src="/static/js/vendor/jquery.dynatable.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#tb-usuarios').dynatable({
+                features: {
+                    pushState: false,
+                    sort: false
+                },
+                dataset: {
+                    ajax: true,
+                    records: []
+                }
+            });
+
+            var template = $('#links-tmpl').html();
+            var settings = $('#tb-usuarios').data('dynatable').settings;
+
+            settings.table.columns[0].attributeWriter = function(record) { 
+                var value = record[this.id];
+
+                return template.replace(/0/g, value);
+            };
+        });
+    </script>
+{% endblock %}
 {%block body%}    
     <h3>Usuarios</h1>
-    <a href="{{ url_for('.create') }}" class="button">Nuevo usuario</a>
-    
-    <table>
+    <p>
+        <a href="{{ url_for('.create') }}" class="button">Nuevo usuario</a>
+    </p>
+    <table id="tb-usuarios">
         <thead>
             <tr>
-                <th></th>
-                <th>Nombre</th>
+                <th data-dynatable-column="id"></th>
+                <th data-dynatable-column="name">Nombre</th>
                 <th>Login</th>
-                <th>Rol</th>
+                <th data-dynatable-column="role">Rol</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in users %}
-                <tr>
-                    <td>
-                        <a href="{{ url_for('.edit', id=item.id)}}">Editar</a> |
-                        <a href="{{ url_for('.delete', id=item.id)}}" class="delete-confirm">Eliminar</a>
-                    </td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.login }}</td>
-                    <td>{{ 'Administrador' if item.role == 1 else 'Geólogo' }}
-                </tr>
-            {% endfor %}
         </tbody>
     </table>
+
+    <script type="text/html" id="links-tmpl">
+        <a href="{{ url_for('.edit', id=0)}}">Editar</a> |
+        <a href="{{ url_for('.delete', id=0)}}" class="delete-confirm">Eliminar</a>
+    </script>
                 
 {%endblock%}

@@ -1,5 +1,5 @@
 from flask import (
-     Blueprint, flash, current_app, render_template,
+     Blueprint, flash, current_app, jsonify, render_template,
      redirect, request, session, url_for
 )
 from weasyprint import HTML
@@ -21,8 +21,29 @@ mov_repo = MovimientoRepository()
 @bp.route('/movimientos')
 @authorize()
 def index():
-    lista = mov_repo.get_all()
-    return render_template('movimientos/index.html', movimientos=lista)
+    if not request.is_xhr:
+        return render_template('movimientos/index.html')
+
+    search = request.args.get('queries[search]', '')
+    limit = request.args.get('perPage', 0)
+    offset = request.args.get('offset', 0)
+
+    movimientos = mov_repo.get_list(search, limit, offset)
+
+    def format_mov(mov):
+        return {
+            'id': mov.id,
+            'encuestador': mov.encuestador,
+            'fecha': mov.fecha.strftime('%Y-%m-%d'),
+            'institucion': mov.institucion,
+            'codigo': mov.codigo,
+            'usuario': mov.usuario.name
+        }
+
+    return jsonify({
+        'registros': [format_mov(m) for m in movimientos[1]],
+        'total': movimientos[0]
+    })
 
 
 @bp.route('/movimientos/create', methods=['GET', 'POST'])
